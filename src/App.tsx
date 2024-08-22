@@ -1,9 +1,20 @@
 import './App.css'
 import { useState } from 'react'
+import { GoogleMap, LoadScript } from "@react-google-maps/api";
 
 function App() {
   const [userName, setUserName] = useState<string>("");
   const [userEmail, setUserEmail] = useState<string>("");
+
+  const containerStyle = {
+    width: "400px",
+    height: "400px",
+  };
+  
+  const center = {
+    lat: 35.68554104748237,
+    lng: 139.7528246814339,
+  };
 
   async function callGetStores() {
     try {
@@ -28,7 +39,6 @@ function App() {
         },
         body: JSON.stringify(userData),
       });
-      // });
       const data = await response.json();
       console.log(data)    
     } catch (error) {
@@ -61,6 +71,14 @@ function App() {
         <p>{userEmail}</p>
         <button onClick={() => callCreateUser()}>Create User</button>
       </div>
+
+      <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={17}
+        ></GoogleMap>
+      </LoadScript>
     </>
   )
 }
