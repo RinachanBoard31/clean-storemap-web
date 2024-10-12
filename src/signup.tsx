@@ -2,6 +2,8 @@ import './signup.css'
 import React, {useEffect, useRef, useState } from "react";
 import axios from 'axios';
 import requests from './utils/Request';
+import {useNavigate} from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 // sex,genderの引数を外部から参照したいためsex,genderは外部で定義し引数として受け取る
 function sexGenderCanvas({sex, gender, setSex, setGender}: {
@@ -171,6 +173,8 @@ function Signup() {
   // sexとgenderは子コンポーネントとして別関数にしているため親コンポーネントであるここで定義をする。
   const [sex,setSex] = useState<number>(0);       // 性別のX座標
   const [gender,setGender] = useState<number>(0); // 性別のY座標
+  const [, setCookie,] = useCookies(["isSession"]); // cookieにログイン情報を残すため
+  const navigate = useNavigate(); // 画面遷移をするためにuseNavigate フックを使用
   const [errorMessages, setErrorMessage] = useState<string>("");
   function displayErrors(){
     if(errorMessages == ""){ // エラーが存在しない場合
@@ -212,6 +216,10 @@ function Signup() {
     sex: number;
     gender: number;
   }
+  // エラーがあるかを確認する
+  function hasError(object: {}) {
+    return Object.keys(object).length !== 0
+  }
   // 年代の項目
   const selectedAgeOptions: Array<string> = ["10代未満","10代","20代","30代","40代","50代","60代以上"];
 
@@ -222,7 +230,10 @@ function Signup() {
     }
     try{
       const result =await axios.post(requests.createUser, formData,{headers: headers});
-      alert("作成しました。")
+      if(!hasError(result.data)){
+        setCookie("isSession",true); // ログイン情報を登録
+        navigate('/'); // 画面遷移
+      }
       return result.data
     }catch(e){
       // console.error(e); // デバッグ時にはこのコメントアウトを外すことでエラー内容を確認できます。
