@@ -1,6 +1,8 @@
 import './App.css'
 import { useState } from 'react'
 import { GoogleMap, LoadScript } from "@react-google-maps/api";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import Signup from './signup';
 
 function App() {
   const [userName, setUserName] = useState<string>("");
@@ -56,6 +58,17 @@ function App() {
 
   return (
     <>
+     <BrowserRouter>
+      <div className="App">
+        <Link to="/">Home</Link>
+        <br />
+        <Link to="/signup">Signup</Link>
+        <br />
+        <Routes>
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
       <h1>Clean Storemap Web</h1>
       <div className="card">
         <button onClick={() => callGetStores()}>
