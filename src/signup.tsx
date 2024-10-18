@@ -1,9 +1,9 @@
 import './signup.css'
 import React, {useEffect, useRef, useState } from "react";
-import axios from 'axios';
-import requests from './utils/Request';
-import {useNavigate} from "react-router-dom";
+import api from './api/api';
+import FormData from './types/formData';
 import { useCookies } from "react-cookie";
+import {useNavigate} from "react-router-dom";
 
 // sex,genderの引数を外部から参照したいためsex,genderは外部で定義し引数として受け取る
 function sexGenderCanvas({sex, gender, setSex, setGender}: {
@@ -175,6 +175,8 @@ function Signup() {
   const [gender,setGender] = useState<number>(0); // 性別のY座標
   const [, setCookie,] = useCookies(["isSession"]); // cookieにログイン情報を残すため
   const navigate = useNavigate(); // 画面遷移をするためにuseNavigate フックを使用
+
+
   const [errorMessages, setErrorMessage] = useState<string>("");
   function displayErrors(){
     if(errorMessages == ""){ // エラーが存在しない場合
@@ -208,44 +210,12 @@ function Signup() {
       </div> 
     )
   }
-  // post通信する時のdataの型
-  interface FormData {
-    name: string;
-    email: string;
-    age: number;
-    sex: number;
-    gender: number;
-  }
-  // エラーがあるかを確認する
-  function hasError(object: {}) {
-    return Object.keys(object).length !== 0
-  }
+ 
+
   // 年代の項目
   const selectedAgeOptions: Array<string> = ["10代未満","10代","20代","30代","40代","50代","60代以上"];
 
-  // post通信してユーザを作成する
-  async function createUser(formData: FormData){
-    const headers = {
-      'Content-Type': 'application/json',
-    }
-    try{
-      const result =await axios.post(requests.createUser, formData,{headers: headers});
-      if(!hasError(result.data)){
-        setCookie("isSession",true); // ログイン情報を登録
-        navigate('/'); // 画面遷移
-      }
-      return result.data
-    }catch(e){
-      // console.error(e); // デバッグ時にはこのコメントアウトを外すことでエラー内容を確認できます。
-      // responseが存在する場合にエラー内容を返す。
-      if (axios.isAxiosError(e)) {
-        if (e.response) {
-          return e.response.data;
-        }
-      }
-      return null
-    }
-  }
+  
 
   // SignUpボタンが押されたときに起動し通信に必要なデータを取得して通信する
   async function handleCreateUser(event: React.FormEvent<HTMLFormElement>){
@@ -257,9 +227,12 @@ function Signup() {
       sex: sex,
       gender: gender,
     };
-    const result = await createUser(formData);
-    if(typeof result === "string"){
+    const result = await api.createUser(formData); // エラーがないときは{}となる。
+    if(typeof result === "string"){ // エラー時
       setErrorMessage(result);
+    }else{ // エラーがない時
+      setCookie("isSession",true); // ログイン情報を登録
+      navigate('/'); // 画面遷移
     }
   }
 
