@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useCookies } from "react-cookie";
 import { GoogleMap, LoadScript } from "@react-google-maps/api";
 import { BrowserRouter, Link, Route, Routes,useNavigate, useLocation} from "react-router-dom";
-import Signup from './signup';
+import Signup from './components/Signup';
 import api from './api/api';
 
 function App() {
