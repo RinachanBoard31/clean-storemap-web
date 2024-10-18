@@ -1,4 +1,4 @@
-import './signup.css'
+import './Signup.css'
 import React, {useState } from "react";
 import Api from '../api/api';
 import FormData from '../types/formData';
@@ -7,6 +7,7 @@ import DisplayErrors from './DisplayErrors'
 import UserForm from './UserForm';
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import userValidate from './userValidation';
 
 function Signup() {
   // sexとgenderは子コンポーネントとして別関数にしているため親コンポーネントであるここで定義をする。
@@ -21,7 +22,7 @@ function Signup() {
   const selectedAgeOptions: Array<string> = ["10代未満","10代","20代","30代","40代","50代","60代以上"];
 
   // SignUpボタンが押されたときに起動し通信に必要なデータを取得して通信する
-  async function handleCreateUser(event: React.FormEvent<HTMLFormElement>){
+  async function handleCreateUser(event: React.FormEvent<HTMLFormElement>): Promise<void>{
     event.preventDefault();
     const formData: FormData = {
       name: (event.currentTarget.elements.namedItem('name') as HTMLInputElement).value,
@@ -30,15 +31,20 @@ function Signup() {
       sex: sex,
       gender: gender,
     };
-    const result = await Api.createUser(formData); // エラーがないときは{}となる。
-    if(typeof result === "string"){ // エラー時
+    // inputタグにrequiredを加えても空欄があった際にエラーメッセージが表示されないので自作のvalidationをかける
+    const error =userValidate.validate(formData);
+    setErrorMessage(error);
+    if(error != ""){ // フロント側でエラーがわかる場合にはここで返す。
+      return;
+    }
+    const result = await Api.createUser(formData); // userを作成する。
+    if(typeof result === "string"){
       setErrorMessage(result);
     }else{ // エラーがない時
       setCookie("isSession",true); // ログイン情報を登録
       navigate('/'); // 画面遷移
     }
   }
-
 
   return (
     <>
@@ -50,7 +56,7 @@ function Signup() {
         {UserForm.EmailFrom(errorMessages)}
         {UserForm.AgeFrom(selectedAgeOptions, errorMessages)}
       </div>
-      {SexGenderCanvas({sex,gender,setSex,setGender})}
+      {SexGenderCanvas({sex, gender, setSex, setGender})}
       <button type="submit">Sign Up</button>  
       </form>
     </>
