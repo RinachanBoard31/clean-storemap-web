@@ -33,6 +33,10 @@ function App() {
     lat: 35.68554104748237,
     lng: 139.7528246814339,
   };
+  function handleCallGetStores(){
+    api.callGetStores();
+  }
+
 
   return (
     <>
@@ -53,7 +57,8 @@ function App() {
       <h1>Clean Storemap Web</h1>
       {(isAuthenticated)?"ログインしています。":"ログインしていません。"}
       <div className="card">
-        <button onClick={() => api.callGetStores()}>
+      
+        <button onClick={handleCallGetStores}>
           押すぅ！
         </button>
       </div>
