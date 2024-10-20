@@ -103,11 +103,6 @@ function SexGenderCanvas({sex, gender, setSex, setGender}: {
   }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);//canvas要素取得
 
-  // 値を中心に置くように初期化する。(初回レンダリング時のみ実行)
-  useEffect(()=>{
-    setSex(0);
-    setGender(0);
-  },[]);
   // sex,genderの値が変わったときにcanvasを更新する
   useEffect(() => {
     if (!canvasRef.current) {
