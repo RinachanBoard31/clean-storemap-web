@@ -3,10 +3,11 @@ import { useEffect } from 'react';
 import { useCookies } from "react-cookie";
 import { BrowserRouter, Link, Route, Routes,useNavigate, useLocation} from "react-router-dom";
 import { Map } from './components/Map';
+import { useNearStores } from './hooks/useNearStores';
 import Signup from './components/Signup';
-import api from './api/api';
 
 function App() {
+  const { trigger, isMutating, data, error, reset } = useNearStores();
   const [cookies,, removeCookie] = useCookies(["isSession"]);
   const isAuthenticated = !!cookies.isSession; // 認証されているかどうか
   const navigate = useNavigate(); // 画面遷移をするためにuseNavigate フックを使用
@@ -25,29 +26,36 @@ function App() {
   }
 
   function handleCallGetStores(){
-    api.callGetStores();
+    reset();
+    trigger();
   }
 
   return (
     <>
-    {/* ヘッダー部分 */}
-    <div className="App">
-      <Link to="/">Home</Link>
-      <br />
-      <Link to="/signup">Signup</Link>
-      <br />
-      <Link to="/" onClick={logout}>Logout</Link>
-      <br />
-      <Routes>
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
-    </div>
-
+      {/* ヘッダー部分 */}
+      <div className="App">
+        <Link to="/">Home</Link>
+        <br />
+        <Link to="/signup">Signup</Link>
+        <br />
+        <Link to="/" onClick={logout}>Logout</Link>
+        <br />
+        <Routes>
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
+      </div>
 
       <h1>Clean Storemap Web</h1>
+
       {(isAuthenticated)?"ログインしています。":"ログインしていません。"}
 
-      <Map handleCallGetStores={handleCallGetStores}/>
+      <div className="card">
+        <button onClick={handleCallGetStores}>店舗情報を取得</button>
+        {isMutating && <p>データ取得中...</p>}
+        {error && <p>{error}</p>}
+      </div>
+
+      {data && <Map stores={data.stores} />}
     </>
   )
 }
