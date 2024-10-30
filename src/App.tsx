@@ -1,8 +1,8 @@
 import './App.css'
 import { useEffect } from 'react';
 import { useCookies } from "react-cookie";
-import { GoogleMap, LoadScript } from "@react-google-maps/api";
 import { BrowserRouter, Link, Route, Routes,useNavigate, useLocation} from "react-router-dom";
+import { Map } from './components/Map';
 import Signup from './components/Signup';
 import api from './api/api';
 
@@ -23,20 +23,10 @@ function App() {
   function logout(){
     removeCookie("isSession");
   }
-  // ここからgoogle-mapの機能
-  const containerStyle = {
-    width: "400px",
-    height: "400px",
-  };
-  
-  const center = {
-    lat: 35.68554104748237,
-    lng: 139.7528246814339,
-  };
+
   function handleCallGetStores(){
     api.callGetStores();
   }
-
 
   return (
     <>
@@ -56,20 +46,8 @@ function App() {
 
       <h1>Clean Storemap Web</h1>
       {(isAuthenticated)?"ログインしています。":"ログインしていません。"}
-      <div className="card">
-      
-        <button onClick={handleCallGetStores}>
-          押すぅ！
-        </button>
-      </div>
 
-      <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={17}
-        ></GoogleMap>
-      </LoadScript>
+      <Map handleCallGetStores={handleCallGetStores}/>
     </>
   )
 }
