@@ -11,7 +11,7 @@ const center = {
 };
 
 type Props = {
-  stores: { id: string; name: string; regularOpeningHours: string; priceLevel: string }[];
+  stores: { id: string; name: string; regularOpeningHours: string; priceLevel: string; location: { latitude: string; longitude: string } }[];
 }
 
 export const Map: React.FC<Props> = (props) => {
@@ -23,6 +23,8 @@ export const Map: React.FC<Props> = (props) => {
             <th>name</th>
             <th>regularOpeningHours</th>
             <th>priceLevel</th>
+            <th>latitute</th>
+            <th>longitute</th>
           </tr>
         </thead>
         <tbody>
@@ -31,6 +33,8 @@ export const Map: React.FC<Props> = (props) => {
               <td>{store.name}</td>
               <td>{store.regularOpeningHours}</td>
               <td>{store.priceLevel}</td>
+              <td>{store.location.latitude}</td>
+              <td>{store.location.longitude}</td>
             </tr>
           ))}
         </tbody>

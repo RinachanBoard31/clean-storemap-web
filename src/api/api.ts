@@ -28,7 +28,7 @@ async function createUser(formData: FormData): Promise<{}| string>{
   }
 }
 
-async function callGetStores(url: string) {
+async function sendGetRequest(url: string) {
   const response = await fetch(url, {headers: { "Content-Type": "application/json" }})
   if (!response.ok) {
     throw new Error(`RequestFailed: url:${url} status:${response.status}`);
@@ -39,5 +39,5 @@ async function callGetStores(url: string) {
 
 export default {
   createUser,
-  callGetStores,
+  sendGetRequest,
 };
