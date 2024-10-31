@@ -1,5 +1,5 @@
 import { APIProvider, Map } from '@vis.gl/react-google-maps';
-import { StoreMarkers } from './StoreMarkers';
+import { StoreMarker } from './StoreMarker';
 
 const containerStyle = {
   width: "500px",
@@ -24,7 +24,9 @@ export const StoreMap: React.FC<Props> = (props) => {
           gestureHandling={'greedy'}
           disableDefaultUI={true}
         />
-        <StoreMarkers stores={props.stores} />
+        {props.stores.map((store) => (
+          <StoreMarker key={store.id} store={store} />
+        ))}
       </APIProvider>
     </div>
   )
