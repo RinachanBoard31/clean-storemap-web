@@ -2,7 +2,7 @@ import './App.css'
 import { useEffect } from 'react';
 import { useCookies } from "react-cookie";
 import { BrowserRouter, Link, Route, Routes,useNavigate, useLocation} from "react-router-dom";
-import { Map } from './components/Map';
+import { StoreMap } from './components/StoreMap';
 import { useNearStores } from './hooks/useNearStores';
 import Signup from './components/Signup';
 
@@ -55,7 +55,7 @@ function App() {
         {error && <p>{error}</p>}
       </div>
 
-      {data && <Map stores={data.stores} />}
+      {data && <StoreMap stores={data.stores} />}
     </>
   )
 }
