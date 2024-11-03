@@ -1,9 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { AdvancedMarker, InfoWindow, useMap, useAdvancedMarkerRef } from '@vis.gl/react-google-maps';
 import styles from './StoreMarker.module.scss';
 
 type Props = {
   store: { id: string; name: string; regularOpeningHours: string; priceLevel: string; location: { latitude: string; longitude: string } };
+  isActive: boolean;
+  onMarkerClick: () => void;
 }
 
 export const StoreMarker: React.FC<Props> = (props) => {
@@ -16,9 +18,13 @@ export const StoreMarker: React.FC<Props> = (props) => {
     if(!ev.latLng) return;
     console.log('marker clicked:', ev.latLng.toString());
     map.panTo(ev.latLng);
-    setInfoWindowShown(true);
-  });
+    props.onMarkerClick();
+  }, [map, props.onMarkerClick]);
   const handleClose = useCallback(() => setInfoWindowShown(false), []);
+
+  useEffect(() => {
+    setInfoWindowShown(props.isActive);
+  }, [props.isActive]);
 
   return (
     <>

@@ -1,3 +1,4 @@
+import { useState, useCallback } from 'react';
 import { APIProvider, Map } from '@vis.gl/react-google-maps';
 import { StoreMarker } from './StoreMarker';
 
@@ -12,6 +13,10 @@ type Props = {
 
 export const StoreMap: React.FC<Props> = (props) => {
   const defaultCenter = {lat: parseFloat(props.stores[0].location.latitude), lng: parseFloat(props.stores[0].location.longitude)};
+  const [activeMarkerId, setActiveMarkerId] = useState<string | null>(null);
+  const handleMarkerClick = useCallback((id: string) => {
+    setActiveMarkerId(id);
+  }, []);
 
   return (
     <div>
@@ -25,7 +30,12 @@ export const StoreMap: React.FC<Props> = (props) => {
           disableDefaultUI={true}
         />
         {props.stores.map((store) => (
-          <StoreMarker key={store.id} store={store} />
+          <StoreMarker
+            key={store.id}
+            store={store}
+            isActive={activeMarkerId === store.id}
+            onMarkerClick={() => handleMarkerClick(store.id)}
+          />
         ))}
       </APIProvider>
     </div>
