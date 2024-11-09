@@ -12,7 +12,7 @@ type Props = {
 }
 
 export const StoreMap: React.FC<Props> = (props) => {
-  const defaultCenter = {lat: parseFloat(props.stores[0].location.latitude), lng: parseFloat(props.stores[0].location.longitude)};
+  const defaultCenter = props.stores.length > 0 && { lat: parseFloat(props.stores[0].location.latitude), lng: parseFloat(props.stores[0].location.longitude) }
   const [activeMarkerId, setActiveMarkerId] = useState<string | null>(null);
   const handleMarkerClick = useCallback((id: string) => {
     setActiveMarkerId(id);
@@ -21,22 +21,24 @@ export const StoreMap: React.FC<Props> = (props) => {
   return (
     <div>
       <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-        <Map
-          mapId="map"
-          style={containerStyle}
-          defaultCenter={defaultCenter}
-          defaultZoom={15}
-          gestureHandling={'greedy'}
-          disableDefaultUI={true}
-        />
-        {props.stores.map((store) => (
-          <StoreMarker
-            key={store.id}
-            store={store}
-            isActive={activeMarkerId === store.id}
-            onMarkerClick={() => handleMarkerClick(store.id)}
+        {defaultCenter ? <>
+          <Map
+            mapId="map"
+            style={containerStyle}
+            defaultCenter={defaultCenter}
+            defaultZoom={15}
+            gestureHandling={'greedy'}
+            disableDefaultUI={true}
           />
-        ))}
+          {props.stores.map((store) => (
+            <StoreMarker
+              key={store.id}
+              store={store}
+              isActive={activeMarkerId === store.id}
+              onMarkerClick={() => handleMarkerClick(store.id)}
+            />
+          ))}
+        </> : <p>周辺に店舗がありません</p>}
       </APIProvider>
     </div>
   )
