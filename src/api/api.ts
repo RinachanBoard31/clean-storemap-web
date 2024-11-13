@@ -28,18 +28,16 @@ async function createUser(formData: FormData): Promise<{}| string>{
   }
 }
 
-async function callGetStores() {
-  try {
-    const response = await fetch(requests.getStores);
-    const data = await response.json();
-    console.log(data);
-  } catch (error) {
-    console.error('error:', error);
+async function sendGetRequest(url: string) {
+  const response = await fetch(url, {headers: { "Content-Type": "application/json" }})
+  if (!response.ok) {
+    throw new Error(`RequestFailed: url:${url} status:${response.status}`);
   }
+  return await response.json();
 };
 
 
 export default {
   createUser,
-  callGetStores,
+  sendGetRequest,
 };

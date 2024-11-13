@@ -1,12 +1,13 @@
 import './App.css'
 import { useEffect } from 'react';
 import { useCookies } from "react-cookie";
-import { GoogleMap, LoadScript } from "@react-google-maps/api";
 import { BrowserRouter, Link, Route, Routes,useNavigate, useLocation} from "react-router-dom";
+import { StoreMap } from './components/StoreMap';
+import { useNearStores } from './hooks/useNearStores';
 import Signup from './components/Signup';
-import api from './api/api';
 
 function App() {
+  const { trigger, isMutating, data, error, reset } = useNearStores();
   const [cookies,, removeCookie] = useCookies(["isSession"]);
   const isAuthenticated = !!cookies.isSession; // 認証されているかどうか
   const navigate = useNavigate(); // 画面遷移をするためにuseNavigate フックを使用
@@ -23,53 +24,38 @@ function App() {
   function logout(){
     removeCookie("isSession");
   }
-  // ここからgoogle-mapの機能
-  const containerStyle = {
-    width: "400px",
-    height: "400px",
-  };
-  
-  const center = {
-    lat: 35.68554104748237,
-    lng: 139.7528246814339,
-  };
-  function handleCallGetStores(){
-    api.callGetStores();
-  }
 
+  function handleCallGetStores(){
+    reset();
+    trigger();
+  }
 
   return (
     <>
-    {/* ヘッダー部分 */}
-    <div className="App">
-      <Link to="/">Home</Link>
-      <br />
-      <Link to="/signup">Signup</Link>
-      <br />
-      <Link to="/" onClick={logout}>Logout</Link>
-      <br />
-      <Routes>
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
-    </div>
-
-
-      <h1>Clean Storemap Web</h1>
-      {(isAuthenticated)?"ログインしています。":"ログインしていません。"}
-      <div className="card">
-      
-        <button onClick={handleCallGetStores}>
-          押すぅ！
-        </button>
+      {/* ヘッダー部分 */}
+      <div className="App">
+        <Link to="/">Home</Link>
+        <br />
+        <Link to="/signup">Signup</Link>
+        <br />
+        <Link to="/" onClick={logout}>Logout</Link>
+        <br />
+        <Routes>
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
       </div>
 
-      <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={17}
-        ></GoogleMap>
-      </LoadScript>
+      <h1>Clean Storemap Web</h1>
+
+      {(isAuthenticated)?"ログインしています。":"ログインしていません。"}
+
+      <div className="card">
+        <button onClick={handleCallGetStores}>店舗情報を取得</button>
+        {isMutating && <p>データ取得中...</p>}
+        {error && <p>{error}</p>}
+      </div>
+
+      {data && <StoreMap stores={data.stores} />}
     </>
   )
 }
