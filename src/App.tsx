@@ -1,14 +1,21 @@
-import './App.css'
-import { useEffect } from 'react';
+import "./App.css";
+import { useEffect } from "react";
 import { useCookies } from "react-cookie";
-import { BrowserRouter, Link, Route, Routes,useNavigate, useLocation} from "react-router-dom";
-import { StoreMap } from './components/StoreMap';
-import { useNearStores } from './hooks/useNearStores';
-import Signup from './components/Signup';
+import {
+  BrowserRouter,
+  Link,
+  Route,
+  Routes,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
+import { StoreMap } from "./components/StoreMap";
+import { useNearStores } from "./hooks/useNearStores";
+import Signup from "./components/Signup";
 
 function App() {
   const { trigger, isMutating, data, error, reset } = useNearStores();
-  const [cookies,, removeCookie] = useCookies(["isSession"]);
+  const [cookies, , removeCookie] = useCookies(["isSession"]);
   const isAuthenticated = !!cookies.isSession; // 認証されているかどうか
   const navigate = useNavigate(); // 画面遷移をするためにuseNavigate フックを使用
   // 認証されていない場合に、特定のページにリダイレクト
@@ -17,15 +24,15 @@ function App() {
   useEffect(() => {
     // ここで認証状態をチェックし、必要に応じてリダイレクト
     if (!isAuthenticated && location.pathname != "/signup") {
-      navigate('/signup');
+      navigate("/signup");
     }
   }, [cookies.isSession, navigate]); // cookies.isSession,ページが変わったときに再実行
-  
-  function logout(){
+
+  function logout() {
     removeCookie("isSession");
   }
 
-  function handleCallGetStores(){
+  function handleCallGetStores() {
     reset();
     trigger();
   }
@@ -38,16 +45,18 @@ function App() {
         <br />
         <Link to="/signup">Signup</Link>
         <br />
-        <Link to="/" onClick={logout}>Logout</Link>
+        <Link to="/" onClick={logout}>
+          Logout
+        </Link>
         <br />
         <Routes>
           <Route path="/signup" element={<Signup />} />
         </Routes>
       </div>
 
-      <h1>Clean Storemap Web</h1>
+      {isAuthenticated ? "ログインしています。" : "ログインしていません。"}
 
-      {(isAuthenticated)?"ログインしています。":"ログインしていません。"}
+      <h1>Clean Storemap Web</h1>
 
       <div className="card">
         <button onClick={handleCallGetStores}>店舗情報を取得</button>
@@ -57,7 +66,7 @@ function App() {
 
       {data && <StoreMap stores={data.stores} />}
     </>
-  )
+  );
 }
 
 // 認証確認をして画面遷移するためにuseNavigateを使用しているため<App>を<BrowserRouter>でラップする
