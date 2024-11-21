@@ -39,35 +39,27 @@ async function sendGetRequest(url: string) {
   return await response.json();
 }
 
-async function sendPostRequest(url: string, data: any) {
-  // const response = await fetch(url, {
-  //   method: "POST",
-  //   headers: { "Content-Type": "application/json" },
-  //   body: JSON.stringify(data),
-  // });
-  // if (!response.ok) {
-  //   throw new Error(`RequestFailed: url:${url} status:${response.status}`);
-  // }
-  // return await response.json();
-  const stores = {
-    stores: [
-      {
-        id: "1",
-        name: "name1",
-        regularOpeningHours: "9:00",
-        priceLevel: "intermediate",
-        location: { latitude: "100.0", longitude: "200.0" },
-      },
-      {
-        id: "2",
-        name: "name2",
-        regularOpeningHours: "10:00",
-        priceLevel: "high",
-        location: { latitude: "300.0", longitude: "400.0" },
-      },
-    ],
-  };
-  return await stores;
+async function sendPostRequest<
+  T extends {
+    [key: string]: unknown;
+  }
+>(
+  url: string,
+  {
+    arg,
+  }: {
+    arg: T;
+  }
+) {
+  const response = await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(arg),
+    headers: { "Content-Type": "application/json" },
+  });
+  if (!response.ok) {
+    throw new Error(`RequestFailed: url:${url} status:${response.status}`);
+  }
+  return await response.json();
 }
 
 export default {

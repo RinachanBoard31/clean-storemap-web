@@ -9,6 +9,7 @@ const containerStyle = {
 };
 
 type Props = {
+  userId: string;
   nearStores: Store[];
   favoriteStores: Store[];
 };
@@ -40,6 +41,7 @@ export const StoreMap: React.FC<Props> = (props) => {
             {props.nearStores.map((store) => (
               <StoreMarker
                 key={store.id}
+                userId={props.userId}
                 store={store}
                 isActive={activeMarkerId === store.id}
                 isFavorite={favoriteStoreIds.includes(store.id)}

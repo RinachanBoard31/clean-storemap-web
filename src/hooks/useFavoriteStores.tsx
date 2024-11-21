@@ -1,20 +1,17 @@
 import { useEffect } from "react";
 import useSWRMutation from "swr/mutation";
 import api from "../api/api";
-import { Store } from "../types/store";
 
 export const useFavoriteStores = (userId: string) => {
-  const { trigger, isMutating, data, error, reset } = useSWRMutation<
-    { stores: Store[] },
-    any,
-    string,
-    { userId: string }
-  >("http://localhost:8080/users/favorite", api.sendPostRequest);
+  const { trigger, isMutating, data, error, reset } = useSWRMutation(
+    `http://localhost:8080/users/${userId}/favorite`,
+    api.sendGetRequest
+  );
 
   useEffect(() => {
     reset();
-    trigger({ userId: userId });
-  }, [userId, reset, trigger]);
+    trigger();
+  }, [reset, trigger]);
 
   return {
     isMutatingFavoriteStore: isMutating,

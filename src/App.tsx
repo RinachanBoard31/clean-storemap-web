@@ -19,6 +19,7 @@ function App() {
   // 認証されていない場合に、特定のページにリダイレクト
   // signupしていないと他のページに遷移できません。
   const location = useLocation(); // URLのpathを取得する
+  const userId = "1"; // 仮のユーザID
   useEffect(() => {
     // ここで認証状態をチェックし、必要に応じてリダイレクト
     if (!isAuthenticated && location.pathname != "/signup") {
@@ -49,7 +50,7 @@ function App() {
 
       {isAuthenticated ? "ログインしています。" : "ログインしていません。"}
 
-      <StoreDashboard />
+      <StoreDashboard userId={userId} />
     </>
   );
 }

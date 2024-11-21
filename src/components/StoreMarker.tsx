@@ -8,8 +8,10 @@ import {
 import styles from "./StoreMarker.module.scss";
 import DollarIcon from "../assets/dollar.svg";
 import { Store } from "../types/store";
+import { useRegisterFavoriteStore } from "../hooks/useRegisterFavoriteStore";
 
 type Props = {
+  userId: string;
   store: Store;
   isActive: boolean;
   isFavorite: boolean;
@@ -35,6 +37,18 @@ export const StoreMarker: React.FC<Props> = (props) => {
     [map, props.onMarkerClick]
   );
   const handleClose = useCallback(() => setInfoWindowShown(false), []);
+  const { trigger } = useRegisterFavoriteStore();
+  function handleFavoriteButtonClick() {
+    trigger({
+      userId: props.userId,
+      storeId: props.store.id,
+      storeName: props.store.name,
+      regularOpeningHours: props.store.regularOpeningHours,
+      priceLevel: props.store.priceLevel,
+      latitute: props.store.location.latitude,
+      longitude: props.store.location.longitude,
+    });
+  }
   const dollarIcon = <img src={DollarIcon} alt="DollarIcon" />;
 
   function priceLevelToText(priceLevel: string) {
@@ -106,7 +120,9 @@ export const StoreMarker: React.FC<Props> = (props) => {
           {props.isFavorite ? (
             <p>お気に入り登録済</p>
           ) : (
-            <button>お気に入りに登録</button>
+            <button onClick={handleFavoriteButtonClick}>
+              お気に入りに登録
+            </button>
           )}
         </InfoWindow>
       )}
