@@ -7,16 +7,12 @@ import {
 } from "@vis.gl/react-google-maps";
 import styles from "./StoreMarker.module.scss";
 import DollarIcon from "../assets/dollar.svg";
+import { Store } from "../types/store";
 
 type Props = {
-  store: {
-    id: string;
-    name: string;
-    regularOpeningHours: string;
-    priceLevel: string;
-    location: { latitude: string; longitude: string };
-  };
+  store: Store;
   isActive: boolean;
+  isFavorite: boolean;
   onMarkerClick: () => void;
 };
 
@@ -107,6 +103,11 @@ export const StoreMarker: React.FC<Props> = (props) => {
                 </li>
               ))}
           </ul>
+          {props.isFavorite ? (
+            <p>お気に入り登録済</p>
+          ) : (
+            <button>お気に入りに登録</button>
+          )}
         </InfoWindow>
       )}
     </>

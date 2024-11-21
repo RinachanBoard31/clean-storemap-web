@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
 import { StoreMarker } from "./StoreMarker";
+import { Store } from "../types/store";
 
 const containerStyle = {
   width: "500px",
@@ -8,21 +9,17 @@ const containerStyle = {
 };
 
 type Props = {
-  stores: {
-    id: string;
-    name: string;
-    regularOpeningHours: string;
-    priceLevel: string;
-    location: { latitude: string; longitude: string };
-  }[];
+  nearStores: Store[];
+  favoriteStores: Store[];
 };
 
 export const StoreMap: React.FC<Props> = (props) => {
-  const defaultCenter = props.stores.length > 0 && {
-    lat: parseFloat(props.stores[0].location.latitude),
-    lng: parseFloat(props.stores[0].location.longitude),
+  const defaultCenter = props.nearStores.length > 0 && {
+    lat: parseFloat(props.nearStores[0].location.latitude),
+    lng: parseFloat(props.nearStores[0].location.longitude),
   };
   const [activeMarkerId, setActiveMarkerId] = useState<string | null>(null);
+  const favoriteStoreIds = props.favoriteStores.map((store) => store.id);
   const handleMarkerClick = useCallback((id: string) => {
     setActiveMarkerId(id);
   }, []);
@@ -40,11 +37,12 @@ export const StoreMap: React.FC<Props> = (props) => {
               gestureHandling={"greedy"}
               disableDefaultUI={true}
             />
-            {props.stores.map((store) => (
+            {props.nearStores.map((store) => (
               <StoreMarker
                 key={store.id}
                 store={store}
                 isActive={activeMarkerId === store.id}
+                isFavorite={favoriteStoreIds.includes(store.id)}
                 onMarkerClick={() => handleMarkerClick(store.id)}
               />
             ))}

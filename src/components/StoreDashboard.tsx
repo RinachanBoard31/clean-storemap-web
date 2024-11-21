@@ -1,12 +1,22 @@
 import { StoreMap } from "../components/StoreMap";
 import { useNearStores } from "../hooks/useNearStores";
+import { useFavoriteStores } from "../hooks/useFavoriteStores";
 
 export const StoreDashboard: React.FC = () => {
-  const { trigger, isMutating, data, error, reset } = useNearStores();
+  const {
+    triggerNearStore,
+    isMutatingNearStore,
+    nearStores,
+    errorNearStore,
+    resetNearStore,
+  } = useNearStores();
+
+  const { isMutatingFavoriteStore, favoriteStores, errorFavoriteStore } =
+    useFavoriteStores("1");
 
   function handleCallGetStores() {
-    reset();
-    trigger();
+    resetNearStore();
+    triggerNearStore();
   }
 
   return (
@@ -15,11 +25,13 @@ export const StoreDashboard: React.FC = () => {
 
       <div className="card">
         <button onClick={handleCallGetStores}>店舗情報を取得</button>
-        {isMutating && <p>データ取得中...</p>}
-        {error && <p>{error}</p>}
+        {isMutatingNearStore && <p>データ取得中...</p>}
+        {errorNearStore && <p>{errorNearStore}</p>}
       </div>
 
-      {data && <StoreMap stores={data.stores} />}
+      {nearStores && favoriteStores && (
+        <StoreMap nearStores={nearStores} favoriteStores={favoriteStores} />
+      )}
     </>
   );
 };
