@@ -1,22 +1,23 @@
-import axios from 'axios';
-import FormData from '../types/formData';
-
+import axios from "axios";
+import FormData from "../types/formData";
 
 const requests = {
-  getStores: 'http://localhost:8080/',       // GETメソッド 
-  createUser: 'http://localhost:8080/user',  // POSTメソッド  
+  getStores: "http://localhost:8080/", // GETメソッド
+  createUser: "http://localhost:8080/user", // POSTメソッド
 };
 
 // post通信してユーザを作成する
 // 返り値: エラーでない時 => {}, エラー時 => string
-async function createUser(formData: FormData): Promise<{}| string>{
+async function createUser(formData: FormData): Promise<{} | string> {
   const headers = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   };
-  try{
-    const result =await axios.post(requests.createUser, formData,{headers: headers});
+  try {
+    const result = await axios.post(requests.createUser, formData, {
+      headers: headers,
+    });
     return result.data;
-  }catch(e){
+  } catch (e) {
     // console.error(e); // デバッグ時にはこのコメントアウトを外すことでエラー内容を確認できます。
     // エラーの中にresponseが存在する場合にエラー内容を返す。
     if (axios.isAxiosError(e)) {
@@ -29,13 +30,14 @@ async function createUser(formData: FormData): Promise<{}| string>{
 }
 
 async function sendGetRequest(url: string) {
-  const response = await fetch(url, {headers: { "Content-Type": "application/json" }})
+  const response = await fetch(url, {
+    headers: { "Content-Type": "application/json" },
+  });
   if (!response.ok) {
     throw new Error(`RequestFailed: url:${url} status:${response.status}`);
   }
   return await response.json();
-};
-
+}
 
 export default {
   createUser,
