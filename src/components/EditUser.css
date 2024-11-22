@@ -1,0 +1,19 @@
+input {
+  width: 100%;
+}
+
+label {
+  font-size: 20px;
+  text-align: left;
+}
+.left-item {
+  text-align: left;
+}
+.error {
+  border-color: red;
+}
+
+#sex-gender-canvas {
+  background-color: #f0f0f0aa;
+  /* canvasのサイズは動的にするために.tsxの方も記載されている可能性があります。 */
+}

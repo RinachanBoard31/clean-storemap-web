@@ -5,6 +5,7 @@ import { StoreDashboard } from "./components/StoreDashboard";
 import { BrowserRouter, Link, Route, Routes,useNavigate, useLocation} from "react-router-dom";
 import { EditUser } from './components/EditUser';
 import { Signup } from './components/Signup';
+import { Login } from './components/Login';
 
 function App() {
   const [cookies, , removeCookie] = useCookies(["isSession"]);
@@ -16,8 +17,8 @@ function App() {
   const userId = "1"; // 仮のユーザID
   useEffect(() => {
     // ここで認証状態をチェックし、必要に応じてリダイレクト
-    if (!isAuthenticated && location.pathname != "/signup" && location.pathname != "/editUser") {
-      navigate("/signup");
+    if (!isAuthenticated && location.pathname != "/signup" && location.pathname != "/login" && location.pathname != "/editUser") {
+      navigate('/signup');
     }
   }, [cookies.isSession, navigate]); // cookies.isSession,ページが変わったときに再実行
 
@@ -33,12 +34,9 @@ function App() {
         <br />
         <Link to="/signup">Signup</Link>
         <br />
-        <Link to="/" onClick={logout}>
-          Logout
-        </Link>
-        <br />
         <Routes>
           <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/editUser" element={<EditUser />} />
         </Routes>
       </div>
