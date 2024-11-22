@@ -50,11 +50,13 @@ function App() {
       <div className="App">
         <Link to="/">Home</Link>
         <br />
-        <Link to="/signup">Signup</Link>
-        <br />
-        <Link to="/" onClick={handleLogout}>
-          Logout
-        </Link>
+        {!isAuthenticated() ? (
+          <Link to="/signup">Signup</Link>
+        ) : (
+          <Link to="/" onClick={handleLogout}>
+            Logout
+          </Link>
+        )}
         <br />
         <Routes>
           <Route path="/signup" element={<Signup />} />
