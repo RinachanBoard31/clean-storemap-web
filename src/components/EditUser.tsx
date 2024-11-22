@@ -15,6 +15,8 @@ export  const EditUser = () =>{
   // sexとgenderは子コンポーネントとして別関数にしているため親コンポーネントであるここで定義をする。
   const [sex,setSex] = useState<number>(0);       // グラフのX座標
   const [gender,setGender] = useState<number>(0); // グラフのY座標
+  const [name,setName] = useState<string>(""); // グラフのY座標
+  const [ageIndex,setAgeIndex] = useState<number>(0); // グラフのY座標
   const navigate = useNavigate(); // 画面遷移をするためにuseNavigateフックを使用
   const { trigger, reset} = updateUser();
   const [errorMessages, setErrorMessage] = useState<string>("");
@@ -29,8 +31,8 @@ export  const EditUser = () =>{
   async function handleUpdateUser(event: React.FormEvent<HTMLFormElement>): Promise<void>{
     event.preventDefault();
     const user: UserUpdateType = {
-      name: (event.currentTarget.elements.namedItem('name') as HTMLInputElement).value,
-      age: Number((event.currentTarget.elements.namedItem('selectedAge') as HTMLSelectElement).value)*10,
+      name: name,
+      age: ageIndex*10,
       sex: sex,
       gender: gender,
     };
@@ -56,8 +58,8 @@ export  const EditUser = () =>{
     <div className={"left-item"}>{DisplayErrors(errorMessages)}</div>
     <form onSubmit={handleUpdateUser}>
       <div className={"left-item"}>
-        {UserForm.NameFrom(errorMessages)}
-        {UserForm.AgeFrom(selectedAgeOptions, errorMessages)}
+        {UserForm.NameFrom(errorMessages, setName)}
+        {UserForm.AgeFrom(selectedAgeOptions, errorMessages, setAgeIndex)}
       </div>
       {SexGenderCanvas({sex, gender, setSex, setGender})}
       <button type="submit">ユーザ情報入力</button>  
