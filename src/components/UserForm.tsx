@@ -1,13 +1,15 @@
 import stringHelpers from "../utils/stringHelpers";
-import { ChangeEvent} from "react";
+import { ChangeEvent } from "react";
 
 const onChangeInputValue = (e: ChangeEvent<HTMLInputElement>, setFunc: any) => {
   setFunc(e.target.value);
 };
-const onChangeSelectValue = (e: ChangeEvent<HTMLSelectElement>, setFunc: any) => {
+const onChangeSelectValue = (
+  e: ChangeEvent<HTMLSelectElement>,
+  setFunc: any
+) => {
   setFunc(e.target.value);
 };
-
 
 function NameFrom(errorMessage: string, setNameFunc: any) {
   return (
@@ -43,7 +45,11 @@ function EmailFrom(errorMessage: string, setNameFunc: any) {
   );
 }
 
-function AgeFrom(selectedAgeOptions: Array<string>, errorMessage: string, setAgeFunc: any) {
+function AgeFrom(
+  selectedAgeOptions: Array<string>,
+  errorMessage: string,
+  setAgeFunc: any
+) {
   return (
     <>
       <label htmlFor="age">年齢</label>

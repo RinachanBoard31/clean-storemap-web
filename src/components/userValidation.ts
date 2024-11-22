@@ -1,4 +1,4 @@
-import {UserUpdateType} from '../types/user';
+import { UserUpdateType } from "../types/user";
 import stringHelpers from "../utils/stringHelpers";
 
 // フロント側で管理するuser側のvalidation
@@ -22,7 +22,7 @@ const validation = {
 };
 
 // userの入力チェックをする
-function validate(user: UserUpdateType): string{
+function validate(user: UserUpdateType): string {
   let error: string = "";
   error += validation.name(user.name);
   error += validation.age(user.age);

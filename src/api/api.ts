@@ -1,14 +1,14 @@
-import { UserUpdateType } from '../types/user';
+import { UserUpdateType } from "../types/user";
 
 // ユーザ情報の更新する
-async function updateUser(url: string, user: UserUpdateType){
+async function updateUser(url: string, user: UserUpdateType) {
   const response = await fetch(url, {
     method: "PUT",
-    headers: {'Content-Type': 'application/json',},
-    body: JSON.stringify(user)
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(user),
   });
   if (!response.ok) {
-    throw new Error(`RequestFailed: url:${url} status:${response.status}`); 
+    throw new Error(`RequestFailed: url:${url} status:${response.status}`);
   }
 }
 
