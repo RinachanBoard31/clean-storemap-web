@@ -1,16 +1,10 @@
 import "./App.css";
 import { useEffect } from "react";
 import { useCookies } from "react-cookie";
-import {
-  BrowserRouter,
-  Link,
-  Route,
-  Routes,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
 import { StoreDashboard } from "./components/StoreDashboard";
-import Signup from "./components/Signup";
+import { BrowserRouter, Link, Route, Routes,useNavigate, useLocation} from "react-router-dom";
+import { EditUser } from './components/EditUser';
+import { Signup } from './components/Signup';
 
 function App() {
   const [cookies, , removeCookie] = useCookies(["isSession"]);
@@ -22,7 +16,7 @@ function App() {
   const userId = "1"; // 仮のユーザID
   useEffect(() => {
     // ここで認証状態をチェックし、必要に応じてリダイレクト
-    if (!isAuthenticated && location.pathname != "/signup") {
+    if (!isAuthenticated && location.pathname != "/signup" && location.pathname != "/editUser") {
       navigate("/signup");
     }
   }, [cookies.isSession, navigate]); // cookies.isSession,ページが変わったときに再実行
@@ -45,6 +39,7 @@ function App() {
         <br />
         <Routes>
           <Route path="/signup" element={<Signup />} />
+          <Route path="/editUser" element={<EditUser />} />
         </Routes>
       </div>
 

@@ -1,6 +1,6 @@
 import stringHelpers from "../utils/stringHelpers";
 
-function UserFrom(errorMessage: string) {
+function NameFrom(errorMessage: string) {
   return (
     <>
       <label htmlFor="name">名前</label>
@@ -61,7 +61,7 @@ function AgeFrom(selectedAgeOptions: Array<string>, errorMessage: string) {
 }
 
 export default {
-  UserFrom,
+  NameFrom,
   EmailFrom,
   AgeFrom,
 };
