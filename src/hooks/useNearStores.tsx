@@ -7,5 +7,11 @@ export const useNearStores = () => {
     api.sendGetRequest
   );
 
-  return { trigger, isMutating, data, error, reset };
+  return {
+    triggerNearStore: trigger,
+    isMutatingNearStore: isMutating,
+    nearStores: data?.stores,
+    errorNearStore: error,
+    resetNearStore: reset,
+  };
 };

@@ -39,7 +39,31 @@ async function sendGetRequest(url: string) {
   return await response.json();
 }
 
+async function sendPostRequest<
+  T extends {
+    [key: string]: unknown;
+  }
+>(
+  url: string,
+  {
+    arg,
+  }: {
+    arg: T;
+  }
+) {
+  const response = await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(arg),
+    headers: { "Content-Type": "application/json" },
+  });
+  if (!response.ok) {
+    throw new Error(`RequestFailed: url:${url} status:${response.status}`);
+  }
+  return await response.json();
+}
+
 export default {
   createUser,
   sendGetRequest,
+  sendPostRequest,
 };

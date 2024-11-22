@@ -9,18 +9,17 @@ import {
   useNavigate,
   useLocation,
 } from "react-router-dom";
-import { StoreMap } from "./components/StoreMap";
-import { useNearStores } from "./hooks/useNearStores";
+import { StoreDashboard } from "./components/StoreDashboard";
 import Signup from "./components/Signup";
 
 function App() {
-  const { trigger, isMutating, data, error, reset } = useNearStores();
   const [cookies, , removeCookie] = useCookies(["isSession"]);
   const isAuthenticated = !!cookies.isSession; // 認証されているかどうか
   const navigate = useNavigate(); // 画面遷移をするためにuseNavigate フックを使用
   // 認証されていない場合に、特定のページにリダイレクト
   // signupしていないと他のページに遷移できません。
   const location = useLocation(); // URLのpathを取得する
+  const userId = "1"; // 仮のユーザID
   useEffect(() => {
     // ここで認証状態をチェックし、必要に応じてリダイレクト
     if (!isAuthenticated && location.pathname != "/signup") {
@@ -30,11 +29,6 @@ function App() {
 
   function logout() {
     removeCookie("isSession");
-  }
-
-  function handleCallGetStores() {
-    reset();
-    trigger();
   }
 
   return (
@@ -56,15 +50,7 @@ function App() {
 
       {isAuthenticated ? "ログインしています。" : "ログインしていません。"}
 
-      <h1>Clean Storemap Web</h1>
-
-      <div className="card">
-        <button onClick={handleCallGetStores}>店舗情報を取得</button>
-        {isMutating && <p>データ取得中...</p>}
-        {error && <p>{error}</p>}
-      </div>
-
-      {data && <StoreMap stores={data.stores} />}
+      <StoreDashboard userId={userId} />
     </>
   );
 }

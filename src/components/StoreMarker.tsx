@@ -7,16 +7,14 @@ import {
 } from "@vis.gl/react-google-maps";
 import styles from "./StoreMarker.module.scss";
 import DollarIcon from "../assets/dollar.svg";
+import { Store } from "../types/store";
+import { useRegisterFavoriteStore } from "../hooks/useRegisterFavoriteStore";
 
 type Props = {
-  store: {
-    id: string;
-    name: string;
-    regularOpeningHours: string;
-    priceLevel: string;
-    location: { latitude: string; longitude: string };
-  };
+  userId: string;
+  store: Store;
   isActive: boolean;
+  isFavorite: boolean;
   onMarkerClick: () => void;
 };
 
@@ -39,6 +37,17 @@ export const StoreMarker: React.FC<Props> = (props) => {
     [map, props.onMarkerClick]
   );
   const handleClose = useCallback(() => setInfoWindowShown(false), []);
+  const { trigger } = useRegisterFavoriteStore(props.userId);
+  function handleFavoriteButtonClick() {
+    trigger({
+      storeId: props.store.id,
+      storeName: props.store.name,
+      regularOpeningHours: props.store.regularOpeningHours,
+      priceLevel: props.store.priceLevel,
+      latitude: props.store.location.latitude,
+      longitude: props.store.location.longitude,
+    });
+  }
   const dollarIcon = <img src={DollarIcon} alt="DollarIcon" />;
 
   function priceLevelToText(priceLevel: string) {
@@ -107,6 +116,13 @@ export const StoreMarker: React.FC<Props> = (props) => {
                 </li>
               ))}
           </ul>
+          {props.isFavorite ? (
+            <p>お気に入り登録済</p>
+          ) : (
+            <button onClick={handleFavoriteButtonClick}>
+              お気に入りに登録
+            </button>
+          )}
         </InfoWindow>
       )}
     </>
