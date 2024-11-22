@@ -4,7 +4,7 @@ import api from "../api/api";
 
 export const useFavoriteStores = (userId: string) => {
   const { trigger, isMutating, data, error, reset } = useSWRMutation(
-    `http://localhost:8080/users/${userId}/favorite`,
+    `http://localhost:8080/user/${userId}/favorite-store`,
     api.sendGetRequest
   );
 

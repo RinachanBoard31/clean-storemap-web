@@ -37,10 +37,9 @@ export const StoreMarker: React.FC<Props> = (props) => {
     [map, props.onMarkerClick]
   );
   const handleClose = useCallback(() => setInfoWindowShown(false), []);
-  const { trigger } = useRegisterFavoriteStore();
+  const { trigger } = useRegisterFavoriteStore(props.userId);
   function handleFavoriteButtonClick() {
     trigger({
-      userId: parseInt(props.userId),
       storeId: props.store.id,
       storeName: props.store.name,
       regularOpeningHours: props.store.regularOpeningHours,
