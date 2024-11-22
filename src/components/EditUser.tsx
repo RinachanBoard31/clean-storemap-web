@@ -26,7 +26,7 @@ export  const EditUser = () =>{
   const selectedAgeOptions: Array<string> = ["10代未満","10代","20代","30代","40代","50代","60代以上"];
 
   // ユーザ情報入力ボタンが押されたときに起動し通信に必要なデータを取得して通信する
-  async function handleCreateUser(event: React.FormEvent<HTMLFormElement>): Promise<void>{
+  async function handleUpdateUser(event: React.FormEvent<HTMLFormElement>): Promise<void>{
     event.preventDefault();
     const user: UserUpdateType = {
       name: (event.currentTarget.elements.namedItem('name') as HTMLInputElement).value,
@@ -54,7 +54,7 @@ export  const EditUser = () =>{
     <>
     <h1 className={"left-item"}>ユーザ情報入力画面</h1>
     <div className={"left-item"}>{DisplayErrors(errorMessages)}</div>
-    <form onSubmit={handleCreateUser}>
+    <form onSubmit={handleUpdateUser}>
       <div className={"left-item"}>
         {UserForm.NameFrom(errorMessages)}
         {UserForm.AgeFrom(selectedAgeOptions, errorMessages)}
