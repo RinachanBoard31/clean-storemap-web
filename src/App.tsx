@@ -1,29 +1,32 @@
 import "./App.css";
 import { useEffect } from "react";
-import { useCookies } from "react-cookie";
 import { StoreDashboard } from "./components/StoreDashboard";
 import { BrowserRouter, Link, Route, Routes,useNavigate, useLocation} from "react-router-dom";
 import { EditUser } from './components/EditUser';
 import { Signup } from './components/Signup';
 import { Login } from './components/Login';
 
+import {useSession} from "./hooks/sessionUser";
+
 function App() {
-  const [cookies, , removeCookie] = useCookies(["isSession"]);
-  const isAuthenticated = !!cookies.isSession; // 認証されているかどうか
+  const {deleteSession, isAuthenticated} = useSession();
   const navigate = useNavigate(); // 画面遷移をするためにuseNavigate フックを使用
-  // 認証されていない場合に、特定のページにリダイレクト
-  // signupしていないと他のページに遷移できません。
+  
   const location = useLocation(); // URLのpathを取得する
   const userId = "1"; // 仮のユーザID
   useEffect(() => {
     // ここで認証状態をチェックし、必要に応じてリダイレクト
-    if (!isAuthenticated && location.pathname != "/signup" && location.pathname != "/login" && location.pathname != "/editUser") {
+    if (!isAuthenticated() && location.pathname != "/signup" && location.pathname != "/login" && location.pathname != "/editUser") {
       navigate('/signup');
     }
-  }, [cookies.isSession, navigate]); // cookies.isSession,ページが変わったときに再実行
+    // ログインしている場合はsignupページに遷移できないようにする
+    if (isAuthenticated() && (location.pathname == "/signup" || location.pathname == "/login")) {
+      navigate('/');
+    }
+  }, [navigate]); // ページが変わったときに実行
 
-  function logout() {
-    removeCookie("isSession");
+  function handleLogout() {
+    deleteSession();
   }
 
   return (
@@ -34,6 +37,8 @@ function App() {
         <br />
         <Link to="/signup">Signup</Link>
         <br />
+        <Link to="/" onClick={handleLogout}>Logout</Link>
+        <br />
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
@@ -41,7 +46,7 @@ function App() {
         </Routes>
       </div>
 
-      {isAuthenticated ? "ログインしています。" : "ログインしていません。"}
+      {(isAuthenticated())?"ログインしています。":"ログインしていません。"}{/* ログイン状態を確認するためです。後に削除 */}
 
       <StoreDashboard userId={userId} />
     </>

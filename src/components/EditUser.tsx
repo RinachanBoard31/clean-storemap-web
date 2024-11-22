@@ -1,6 +1,5 @@
 
 import React, {useState } from "react";
-import { Cookies, useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { updateUser } from '../hooks/userUpdate';
 import { UserUpdateType } from '../types/user';
@@ -9,21 +8,20 @@ import DisplayErrors from './DisplayErrors'
 import UserForm from './UserForm';
 import userValidate from './userValidation';
 import './EditUser.css'
+import {useSession} from "../hooks/sessionUser";
 
 export  const EditUser = () =>{
+  const {createSession} = useSession();
   // sexとgenderは子コンポーネントとして別関数にしているため親コンポーネントであるここで定義をする。
-  const [sex,setSex] = useState<number>(0);       // 性別のX座標
-  const [gender,setGender] = useState<number>(0); // 性別のY座標
-  const [cookie, setCookie,] = useCookies(["id"]);      // ログインしている場合にはidを取得できる
-  const navigate = useNavigate(); // 画面遷移をするためにuseNavigate フックを使用
-  const { trigger, reset} = updateUser(); // ユーザ情報を更新するための関数
+  const [sex,setSex] = useState<number>(0);       // グラフのX座標
+  const [gender,setGender] = useState<number>(0); // グラフのY座標
+  const navigate = useNavigate(); // 画面遷移をするためにuseNavigateフックを使用
+  const { trigger, reset} = updateUser();
   const [errorMessages, setErrorMessage] = useState<string>("");
   // idの取得
   const url = new URL(window.location.href);
   const params = url.searchParams
   const id = Number(params.get('id'))
-  setCookie("id", id) // idをCookieに保存する
-
   // 年代の項目
   const selectedAgeOptions: Array<string> = ["10代未満","10代","20代","30代","40代","50代","60代以上"];
 
@@ -44,7 +42,8 @@ export  const EditUser = () =>{
     }
     reset()
     try{
-      await trigger({id:cookie.id, user: user})
+      await trigger({id: id, user: user})
+      createSession(id) // idをCookieに保存する
       navigate('/'); // 画面遷移
     }catch(err){
       setErrorMessage(`${err}`);
