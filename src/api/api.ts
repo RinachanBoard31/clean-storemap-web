@@ -1,11 +1,11 @@
-import { UserUpdateType } from "../types/user";
-
-// ユーザ情報の更新する
-async function updateUser(url: string, user: UserUpdateType) {
+async function sendPutRequest<T extends { [key: string]: unknown }>(
+  url: string,
+  { arg }: { arg: T }
+) {
   const response = await fetch(url, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user),
+    body: JSON.stringify(arg),
   });
   if (!response.ok) {
     throw new Error(`RequestFailed: url:${url} status:${response.status}`);
@@ -46,7 +46,7 @@ async function sendPostRequest<
 }
 
 export default {
-  updateUser,
+  sendPutRequest,
   sendGetRequest,
   sendPostRequest,
 };

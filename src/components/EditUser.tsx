@@ -17,12 +17,12 @@ export const EditUser = () => {
   const [name, setName] = useState<string>(""); // グラフのY座標
   const [ageIndex, setAgeIndex] = useState<number>(0); // グラフのY座標
   const navigate = useNavigate(); // 画面遷移をするためにuseNavigateフックを使用
-  const { trigger, reset } = updateUser();
   const [errorMessages, setErrorMessage] = useState<string>("");
   // idの取得
   const url = new URL(window.location.href);
   const params = url.searchParams;
   const id = Number(params.get("id"));
+  const { trigger, reset } = updateUser(id);
   // 年代の項目
   const selectedAgeOptions: Array<string> = [
     "10代未満",
@@ -54,7 +54,7 @@ export const EditUser = () => {
     }
     reset();
     try {
-      await trigger({ id: id, user: user });
+      await trigger({ user: user });
       createSession(id); // idをCookieに保存する
       navigate("/"); // 画面遷移
     } catch (err) {
