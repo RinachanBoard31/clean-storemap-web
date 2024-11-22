@@ -40,7 +40,7 @@ export const StoreMarker: React.FC<Props> = (props) => {
   const { trigger } = useRegisterFavoriteStore();
   function handleFavoriteButtonClick() {
     trigger({
-      userId: props.userId,
+      userId: parseInt(props.userId),
       storeId: props.store.id,
       storeName: props.store.name,
       regularOpeningHours: props.store.regularOpeningHours,
