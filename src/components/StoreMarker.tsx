@@ -45,7 +45,7 @@ export const StoreMarker: React.FC<Props> = (props) => {
       storeName: props.store.name,
       regularOpeningHours: props.store.regularOpeningHours,
       priceLevel: props.store.priceLevel,
-      latitute: props.store.location.latitude,
+      latitude: props.store.location.latitude,
       longitude: props.store.location.longitude,
     });
   }
