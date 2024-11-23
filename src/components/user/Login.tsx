@@ -31,8 +31,7 @@ export const Login = () => {
     }
   }, [userId]);
 
-  async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function handleLogin() {
     const user: UserLoginType = {
       email: email,
     };
@@ -51,17 +50,13 @@ export const Login = () => {
       <div className="login-area">
         {EarthVideo()}
         <div className="content-area">
-          <form onSubmit={handleLogin}>
-            <div className="login-form">
-              {UserForm.EmailFrom(errorMessages, setEmail)}
-            </div>
-            {errorLogin && (
-              <span className="errorMessage">{errorMessages}</span>
-            )}
-            <button type="submit" className="login-btn">
-              ログイン
-            </button>
-          </form>
+          <div className="login-form">
+            {UserForm.EmailFrom(errorMessages, setEmail)}
+          </div>
+          {errorLogin && <span className="errorMessage">{errorMessages}</span>}
+          <button onClick={handleLogin} className="login-btn">
+            ログイン
+          </button>
           <div className="login-area-button">
             <a href="signup" className="signup-link">
               新規登録の方はこちら
