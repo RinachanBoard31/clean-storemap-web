@@ -1,32 +1,34 @@
-import "../../css/user/Login.css";
 import { useEffect } from "react";
-import { loginUser } from "../../hooks/user/uselogin";
-import { changeBoxShadowColor } from "../../hooks/user/useChangeBoxShadowColor";
-import { UserLoginType } from "../../types/user";
 import { useNavigate } from "react-router-dom";
-import UserForm from "./UserForm";
 import { useState } from "react";
+import { AppTitle } from "../AppTitle";
+import { EarthVideo } from "../EarthVideo"; // 動画ファイルをインポート
+import UserForm from "./UserForm";
+import { loginUser } from "../../hooks/user/uselogin";
 import userValidate from "../../hooks/user/useValidationUser";
 import { useSession } from "../../hooks/user/useSession";
-import { EarthVideo } from "../EarthVideo"; // 動画ファイルをインポート
+import { changeBoxShadowColor } from "../../hooks/user/useChangeBoxShadowColor";
+import { UserLoginType } from "../../types/user";
+import "../../css/user/Login.css";
 
 export const Login = () => {
+  const { triggerLogin, userId, errorLogin, resetLogin } = loginUser();
   const { createSession } = useSession();
   const [email, setEmail] = useState("");
-  const { triggerLogin, userId, errorLogin, resetLogin } = loginUser();
-  const navigate = useNavigate();
   const [errorMessages, setErrorMessage] = useState<string>("");
+  const navigate = useNavigate();
+
   useEffect(() => {
     setInterval(() => changeBoxShadowColor("login-area"), 30);
   }, []);
 
   useEffect(() => {
     if (errorLogin) {
-      console.error(errorLogin);
       // 本来であればsetErrorMessage(`${errorLogin}`)とするが、フロントに500番のエラーしか返ってこないので、直接エラーメッセージを入れる
       setErrorMessage("Emailが登録されていません");
     }
   }, [errorLogin]);
+
   useEffect(() => {
     if (!errorLogin && userId) {
       createSession(userId);
@@ -50,10 +52,7 @@ export const Login = () => {
 
   return (
     <>
-      <h1 className="title">
-        <span>Welcome to </span>
-        <span>Clean Storemap Web</span>
-      </h1>
+      {AppTitle()}
       <div className="login-area">
         {EarthVideo()}
         <div className="content-area">

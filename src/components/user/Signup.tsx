@@ -1,8 +1,9 @@
-import "../../css/user/Signup.css";
 import { useEffect } from "react";
+import { AppTitle } from "../AppTitle";
+import { EarthVideo } from "../EarthVideo"; // 動画ファイルをインポート
 import { signupUser } from "../../hooks/user/useSignup";
 import { changeBoxShadowColor } from "../../hooks/user/useChangeBoxShadowColor";
-import { EarthVideo } from "../EarthVideo"; // 動画ファイルをインポート
+import "../../css/user/Signup.css";
 
 export const Signup = () => {
   function handleSignup() {
@@ -15,10 +16,7 @@ export const Signup = () => {
 
   return (
     <>
-      <h1 className="title">
-        <span>Welcome to </span>
-        <span>Clean Storemap Web</span>
-      </h1>
+      {AppTitle()}
       <div className="signup-area">
         {EarthVideo()}
         <div className="signup-area-button">
