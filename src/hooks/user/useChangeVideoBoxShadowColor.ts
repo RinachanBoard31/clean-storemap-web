@@ -1,9 +1,9 @@
-export const changeBoxShadowColor = (className: string) => {
-  const area = document.getElementsByClassName(className)[0] as HTMLElement;
-  if (area === undefined) {
+export const changeVideoBoxShadowColor = () => {
+  const video = document.getElementsByTagName("video")[0] as HTMLElement;
+  if (video === undefined) {
     return;
   }
-  const boxShadow = window.getComputedStyle(area, "").boxShadow;
+  const boxShadow = window.getComputedStyle(video, "").boxShadow;
   // 正規表現でRGB値を取得
   const rgbaMatch = boxShadow.match(/rgba\(([^)]+)\)/);
   if (rgbaMatch === null || rgbaMatch.length < 1) {
@@ -32,5 +32,5 @@ export const changeBoxShadowColor = (className: string) => {
     b += step;
   }
 
-  area.style.boxShadow = `0px 5px 18px 11px rgba(${r}, ${g}, ${b}, ${a})`;
+  video.style.boxShadow = `0px 5px 18px 11px rgba(${r}, ${g}, ${b}, ${a})`;
 };

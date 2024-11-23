@@ -7,7 +7,6 @@ import UserForm from "./UserForm";
 import { loginUser } from "../../hooks/user/uselogin";
 import userValidate from "../../hooks/user/useValidationUser";
 import { useSession } from "../../hooks/user/useSession";
-import { changeBoxShadowColor } from "../../hooks/user/useChangeBoxShadowColor";
 import { UserLoginType } from "../../types/user";
 import "../../css/user/Login.css";
 
@@ -17,10 +16,6 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [errorMessages, setErrorMessage] = useState<string>("");
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setInterval(() => changeBoxShadowColor("login-area"), 30);
-  }, []);
 
   useEffect(() => {
     if (errorLogin) {
