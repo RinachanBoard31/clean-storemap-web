@@ -1,4 +1,4 @@
-import userValidate from "./userValidation";
+import userValidate from "../hooks/userValidation";
 
 function DisplayErrors(errorMessages: string) {
   if (errorMessages == "") {

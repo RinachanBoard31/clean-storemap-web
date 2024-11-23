@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect } from "react";
-import { useCookies } from "react-cookie";
+import { StoreDashboard } from "./components/StoreDashboard";
 import {
   BrowserRouter,
   Link,
@@ -9,27 +9,41 @@ import {
   useNavigate,
   useLocation,
 } from "react-router-dom";
-import { StoreDashboard } from "./components/StoreDashboard";
-import Signup from "./components/Signup";
+
 import ShowFavoriteStoresRanking from "./components/favoriteStoresRanking/FavoriteStoresRanking";
+import { EditUser } from "./components/EditUser";
+import { Signup } from "./components/Signup";
+import { Login } from "./components/Login";
+
+import { useSession } from "./hooks/sessionUser";
 
 function App() {
-  const [cookies, , removeCookie] = useCookies(["isSession"]);
-  const isAuthenticated = !!cookies.isSession; // 認証されているかどうか
+  const { deleteSession, isAuthenticated, getSessionId } = useSession();
   const navigate = useNavigate(); // 画面遷移をするためにuseNavigate フックを使用
-  // 認証されていない場合に、特定のページにリダイレクト
-  // signupしていないと他のページに遷移できません。
+
   const location = useLocation(); // URLのpathを取得する
   const userId = "1"; // 仮のユーザID
   useEffect(() => {
     // ここで認証状態をチェックし、必要に応じてリダイレクト
-    if (!isAuthenticated && location.pathname != "/signup") {
+    if (
+      !isAuthenticated() &&
+      location.pathname != "/signup" &&
+      location.pathname != "/login" &&
+      location.pathname != "/editUser"
+    ) {
       navigate("/signup");
     }
-  }, [cookies.isSession, navigate]); // cookies.isSession,ページが変わったときに再実行
+    // ログインしている場合はsignupページに遷移できないようにする
+    if (
+      isAuthenticated() &&
+      (location.pathname == "/signup" || location.pathname == "/login")
+    ) {
+      navigate("/");
+    }
+  }, [getSessionId(), navigate]); // クッキーを削除したと気に、削除前に画面遷移の処理が走ってしまうので、クッキーの削除を監視して削除する
 
-  function logout() {
-    removeCookie("isSession");
+  function handleLogout() {
+    deleteSession();
   }
 
   return (
@@ -38,21 +52,26 @@ function App() {
       <div className="App">
         <Link to="/">Home</Link>
         <br />
-        <Link to="/signup">Signup</Link>
+        {!isAuthenticated() ? (
+          <Link to="/signup">Signup</Link>
+        ) : (
+          <Link to="/" onClick={handleLogout}>
+            Logout
+          </Link>
+        )}
         <br />
         <Link to="/favorite-store-ranking">Favorite Store Ranking</Link>
         <br />
-        <Link to="/" onClick={logout}>
-          Logout
-        </Link>
-        <br />
         <Routes>
           <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/editUser" element={<EditUser />} />
           <Route path="/favorite-store-ranking" element={<ShowFavoriteStoresRanking />} />
         </Routes>
       </div>
 
-      {isAuthenticated ? "ログインしています。" : "ログインしていません。"}
+      {isAuthenticated() ? "ログインしています。" : "ログインしていません。"}
+      {/* ログイン状態を確認するためです。後に削除 */}
 
       <StoreDashboard userId={userId} />
     </>
