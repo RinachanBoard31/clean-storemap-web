@@ -63,7 +63,7 @@ export const Login = () => {
             </button>
           </form>
           <div className="login-area-button">
-            <a href="signup" id="signup-link">
+            <a href="signup" className="signup-link">
               新規登録の方はこちら
             </a>
           </div>

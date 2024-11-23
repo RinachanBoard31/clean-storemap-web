@@ -14,11 +14,11 @@ export const Signup = () => {
       <div className="signup-area">
         {EarthVideo()}
         <div className="signup-area-button">
-          <button onClick={handleSignup} id="signup-btn">
+          <button onClick={handleSignup} className="signup-btn">
             Googleでサインアップする
           </button>
           <br />
-          <a href="login" id="login-link">
+          <a href="login" className="login-link">
             ログインの方はこちら
           </a>
         </div>

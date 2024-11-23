@@ -14,12 +14,12 @@
   min-width: 350px;
 }
 
-#signup-btn {
+.signup-btn {
   background-color: rgba(192, 208, 208, 0.646);
   margin: 80px 0px 40px 0;
   font-size: x-large;
 }
 
-#login-link {
+.login-link {
   color: rgb(88, 192, 221);
 }
