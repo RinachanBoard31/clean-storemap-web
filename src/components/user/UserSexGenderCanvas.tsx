@@ -80,14 +80,18 @@ function drawLabel(ctx: CanvasRenderingContext2D) {
   const yMinusLabel: string = "体の性別:男";
   ctx.font = "15px serif";
   ctx.fillStyle = "#FF0000";
+  // xの正の方向
   ctx.fillText(
     xPulusLabel,
     canWriteCanvasSize + margin / 3,
     canWriteHalfCanvasSize + margin / 3
   );
+  // yの正の方向
   ctx.fillText(yPulusLabel, canWriteHalfCanvasSize + margin / 3, margin * 0.8);
   ctx.fillStyle = "#0000FF";
+  // xの負の方向
   ctx.fillText(xMinusLabel, margin / 3, canWriteHalfCanvasSize + margin / 3);
+  // yの正の方向
   ctx.fillText(
     yMinusLabel,
     canWriteHalfCanvasSize + margin / 3,
@@ -107,8 +111,8 @@ function denormalizing(value: number) {
   return value * canWriteHalfCanvasSize;
 }
 
-// sex,genderの変数をを外部から参照したいためsex,genderは外部で定義し引数として受け取る
-function SexGenderCanvas({
+// sex,genderの変数をを外部から参照するためset関数を受け取る
+export const SexGenderCanvas = ({
   sex,
   gender,
   setSex,
@@ -118,10 +122,9 @@ function SexGenderCanvas({
   gender: number;
   setSex: (newValue: number) => void;
   setGender: (newValue: number) => void;
-}) {
-  const canvasRef = useRef<HTMLCanvasElement>(null); //canvas要素取得
+}) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // sex,genderの値が変わったときにcanvasを更新する
   useEffect(() => {
     if (!canvasRef.current) {
       throw new Error("canvas要素の取得に失敗しました");
@@ -165,7 +168,7 @@ function SexGenderCanvas({
       Math.abs(clickedXFromCenter) < canWriteHalfCanvasSize + margin / 3 &&
       Math.abs(clickedYFromCenter) < canWriteHalfCanvasSize + margin / 3
     ) {
-      // 値の更新(このときにuseEffectが作動する)
+      // 値の更新
       // 値は-1.0~1.0とする。縦軸は上に行くほど正にするので正負を反転させる
       setSex(normalizing(clickedXFromCenter));
       setGender(-normalizing(clickedYFromCenter));
@@ -190,5 +193,4 @@ function SexGenderCanvas({
       </div>
     </>
   );
-}
-export default SexGenderCanvas;
+};

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { updateUser } from "../../hooks/user/useUpdateUser";
-import { UserUpdateType } from "../../types/user";
-import SexGenderCanvas from "./UserSexGenderCanvas";
+import { SexGenderCanvas } from "./UserSexGenderCanvas";
 import DisplayErrors from "./UserDisplayErrors";
 import UserForm from "./UserForm";
+import { updateUser } from "../../hooks/user/useUpdateUser";
 import userValidate from "../../hooks/user/useValidationUser";
-import "../../css/user/UserEdit.css";
 import { useSession } from "../../hooks/user/useSession";
+import { UserUpdateType } from "../../types/user";
+import "../../css/user/UserEdit.css";
 
 export const UserEdit = () => {
   const { createSession } = useSession();
