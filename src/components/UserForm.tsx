@@ -1,6 +1,17 @@
 import stringHelpers from "../utils/stringHelpers";
+import { ChangeEvent } from "react";
 
-function UserFrom(errorMessage: string) {
+const onChangeInputValue = (e: ChangeEvent<HTMLInputElement>, setFunc: any) => {
+  setFunc(e.target.value);
+};
+const onChangeSelectValue = (
+  e: ChangeEvent<HTMLSelectElement>,
+  setFunc: any
+) => {
+  setFunc(e.target.value);
+};
+
+function NameFrom(errorMessage: string, setNameFunc: any) {
   return (
     <>
       <label htmlFor="name">名前</label>
@@ -10,13 +21,14 @@ function UserFrom(errorMessage: string) {
         name="name"
         placeholder="名前を入力してください"
         className={errorMessage.includes("Name") ? "error" : ""}
+        onChange={(e) => onChangeInputValue(e, setNameFunc)}
       />
       <br />
     </>
   );
 }
 
-function EmailFrom(errorMessage: string) {
+function EmailFrom(errorMessage: string, setNameFunc: any) {
   return (
     <>
       <label htmlFor="email">Email</label>
@@ -26,13 +38,18 @@ function EmailFrom(errorMessage: string) {
         name="email"
         placeholder="emailを入力してください"
         className={errorMessage.includes("Email") ? "error" : ""}
+        onChange={(e) => onChangeInputValue(e, setNameFunc)}
       />
       <br />
     </>
   );
 }
 
-function AgeFrom(selectedAgeOptions: Array<string>, errorMessage: string) {
+function AgeFrom(
+  selectedAgeOptions: Array<string>,
+  errorMessage: string,
+  setAgeFunc: any
+) {
   return (
     <>
       <label htmlFor="age">年齢</label>
@@ -42,6 +59,7 @@ function AgeFrom(selectedAgeOptions: Array<string>, errorMessage: string) {
         className={
           stringHelpers.includesAny(errorMessage, "年齢", "Age") ? "error" : ""
         }
+        onChange={(e) => onChangeSelectValue(e, setAgeFunc)}
       >
         <option key={-1} value={-1}>
           ---
@@ -61,7 +79,7 @@ function AgeFrom(selectedAgeOptions: Array<string>, errorMessage: string) {
 }
 
 export default {
-  UserFrom,
+  NameFrom,
   EmailFrom,
   AgeFrom,
 };
