@@ -19,7 +19,7 @@ export const Login = () => {
   // errorLoginに変更があった際にsetErrorMessageを呼び出す
   useEffect(() => {
     if (errorLogin) {
-      console.log(errorLogin);
+      console.error(errorLogin);
       // 本来であればsetErrorMessage(`${errorLogin}`)とするが、フロントに500番のエラーしか返ってこないので、直接エラーメッセージを入れる
       setErrorMessage("Emailが登録されていません");
     }
@@ -27,6 +27,7 @@ export const Login = () => {
   useEffect(() => {
     if (!errorLogin && userId) {
       createSession(userId);
+      navigate("/home");
     }
   }, [userId]);
 
@@ -42,7 +43,6 @@ export const Login = () => {
     }
     resetLogin();
     await triggerLogin({ email: user.email });
-    !errorLogin && navigate("/");
   }
   const [errorMessages, setErrorMessage] = useState<string>("");
   useEffect(() => {

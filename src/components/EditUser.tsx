@@ -61,7 +61,7 @@ export const EditUser = () => {
         gender: user.gender,
       });
       createSession(id); // idをCookieに保存する
-      navigate("/"); // 画面遷移
+      navigate("/home"); // 画面遷移
     } catch (err) {
       setErrorMessage(`${err}`);
     }

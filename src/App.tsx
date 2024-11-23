@@ -1,6 +1,5 @@
 import "./App.css";
 import { useEffect } from "react";
-import { StoreDashboard } from "./components/StoreDashboard";
 import {
   BrowserRouter,
   Link,
@@ -12,7 +11,7 @@ import {
 import { EditUser } from "./components/EditUser";
 import { Signup } from "./components/Signup";
 import { Login } from "./components/Login";
-
+import { Home } from "./components/Home";
 import { useSession } from "./hooks/sessionUser";
 
 function App() {
@@ -20,9 +19,8 @@ function App() {
   const navigate = useNavigate(); // 画面遷移をするためにuseNavigate フックを使用
 
   const location = useLocation(); // URLのpathを取得する
-  const userId = "1"; // 仮のユーザID
   useEffect(() => {
-    // ここで認証状態をチェックし、必要に応じてリダイレクト
+    // ログイン前に遷移できるページは条件式に追加する
     if (
       !isAuthenticated() &&
       location.pathname != "/login" &&
@@ -31,12 +29,12 @@ function App() {
     ) {
       navigate("/login");
     }
-    // ログインしている場合はsignupページに遷移できないようにする
+    // ログイン後に遷移できないページは条件式に追加する
     if (
       isAuthenticated() &&
       (location.pathname == "/login" || location.pathname == "/signup")
     ) {
-      navigate("/");
+      navigate("/home");
     }
   }, [getSessionId(), navigate]); // クッキーを削除したと気に、削除前に画面遷移の処理が走ってしまうので、クッキーの削除を監視して削除する
 
@@ -58,10 +56,9 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/editUser" element={<EditUser />} />
+          <Route path="/home" element={<Home />} />
         </Routes>
       </div>
-
-      <StoreDashboard userId={userId} />
     </>
   );
 }
