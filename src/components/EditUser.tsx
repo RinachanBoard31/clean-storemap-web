@@ -5,7 +5,7 @@ import { UserUpdateType } from "../types/user";
 import SexGenderCanvas from "./SexGenderCanvas";
 import DisplayErrors from "./DisplayErrors";
 import UserForm from "./UserForm";
-import userValidate from "./userValidation";
+import userValidate from "../hooks/userValidation";
 import "./EditUser.css";
 import { useSession } from "../hooks/sessionUser";
 
