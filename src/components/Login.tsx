@@ -15,8 +15,11 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const { triggerLogin, userId, errorLogin, resetLogin } = loginUser();
   const navigate = useNavigate();
+  const [errorMessages, setErrorMessage] = useState<string>("");
+  useEffect(() => {
+    setInterval(() => changeColor("login-area"), 30);
+  }, []);
 
-  // errorLoginに変更があった際にsetErrorMessageを呼び出す
   useEffect(() => {
     if (errorLogin) {
       console.error(errorLogin);
@@ -44,10 +47,6 @@ export const Login = () => {
     resetLogin();
     await triggerLogin({ email: user.email });
   }
-  const [errorMessages, setErrorMessage] = useState<string>("");
-  useEffect(() => {
-    setInterval(() => changeColor("login-area"), 30);
-  }, []);
 
   return (
     <>
@@ -62,6 +61,9 @@ export const Login = () => {
             <div className="login-form">
               {UserForm.EmailFrom(errorMessages, setEmail)}
             </div>
+            {errorLogin && (
+              <span className="errorMessage">{errorMessages}</span>
+            )}
             <button type="submit" className="login-btn">
               ログイン
             </button>
