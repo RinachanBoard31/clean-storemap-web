@@ -1,4 +1,4 @@
-export const changeColor = (className: string) => {
+export const changeBoxShadowColor = (className: string) => {
   const area = document.getElementsByClassName(className)[0] as HTMLElement;
   if (area === undefined) {
     return;

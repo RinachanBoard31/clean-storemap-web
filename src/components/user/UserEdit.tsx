@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { updateUser } from "../hooks/userUpdate";
-import { UserUpdateType } from "../types/user";
-import SexGenderCanvas from "./SexGenderCanvas";
-import DisplayErrors from "./DisplayErrors";
+import { updateUser } from "../../hooks/user/useUpdateUser";
+import { UserUpdateType } from "../../types/user";
+import SexGenderCanvas from "./UserSexGenderCanvas";
+import DisplayErrors from "./UserDisplayErrors";
 import UserForm from "./UserForm";
-import userValidate from "../hooks/userValidation";
-import "./EditUser.css";
-import { useSession } from "../hooks/sessionUser";
+import userValidate from "../../hooks/user/useValidationUser";
+import "../../css/user/UserEdit.css";
+import { useSession } from "../../hooks/user/useSession";
 
-export const EditUser = () => {
+export const UserEdit = () => {
   const { createSession } = useSession();
   // sexとgenderは子コンポーネントとして別関数にしているため親コンポーネントであるここで定義をする。
   const [sex, setSex] = useState<number>(0); // グラフのX座標

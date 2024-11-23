@@ -1,8 +1,8 @@
-import "./Signup.css";
+import "../../css/user/Signup.css";
 import { useEffect } from "react";
-import { signupUser } from "../hooks/signupUser";
-import { changeColor } from "../hooks/changeColor";
-import { EarthVideo } from "./Video"; // 動画ファイルをインポート
+import { signupUser } from "../../hooks/user/useSignup";
+import { changeBoxShadowColor } from "../../hooks/user/useChangeBoxShadowColor";
+import { EarthVideo } from "../EarthVideo"; // 動画ファイルをインポート
 
 export const Signup = () => {
   function handleSignup() {
@@ -10,7 +10,7 @@ export const Signup = () => {
   }
   // マウント後にchangeColorを呼び出す
   useEffect(() => {
-    setInterval(() => changeColor("signup-area"), 30);
+    setInterval(() => changeBoxShadowColor("signup-area"), 30);
   }, []);
 
   return (

@@ -1,6 +1,6 @@
-import stringHelpers from "../utils/stringHelpers";
+import stringHelpers from "../../utils/stringHelpers";
 import { ChangeEvent } from "react";
-import "./UserForm.css";
+import "../../css/user/UserForm.css";
 
 const onChangeInputValue = (e: ChangeEvent<HTMLInputElement>, setFunc: any) => {
   setFunc(e.target.value);

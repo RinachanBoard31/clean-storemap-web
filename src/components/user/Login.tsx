@@ -1,14 +1,14 @@
-import "./Login.css";
+import "../../css/user/Login.css";
 import { useEffect } from "react";
-import { loginUser } from "../hooks/loginUser";
-import { changeColor } from "../hooks/changeColor";
-import { UserLoginType } from "../types/user";
+import { loginUser } from "../../hooks/user/uselogin";
+import { changeBoxShadowColor } from "../../hooks/user/useChangeBoxShadowColor";
+import { UserLoginType } from "../../types/user";
 import { useNavigate } from "react-router-dom";
 import UserForm from "./UserForm";
 import { useState } from "react";
-import userValidate from "../hooks/userValidation";
-import { useSession } from "../hooks/sessionUser";
-import { EarthVideo } from "./Video"; // 動画ファイルをインポート
+import userValidate from "../../hooks/user/useValidationUser";
+import { useSession } from "../../hooks/user/useSession";
+import { EarthVideo } from "../EarthVideo"; // 動画ファイルをインポート
 
 export const Login = () => {
   const { createSession } = useSession();
@@ -17,7 +17,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const [errorMessages, setErrorMessage] = useState<string>("");
   useEffect(() => {
-    setInterval(() => changeColor("login-area"), 30);
+    setInterval(() => changeBoxShadowColor("login-area"), 30);
   }, []);
 
   useEffect(() => {

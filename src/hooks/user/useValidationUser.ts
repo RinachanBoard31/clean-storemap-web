@@ -1,5 +1,5 @@
-import { User } from "../types/user";
-import stringHelpers from "../utils/stringHelpers";
+import { User } from "../../types/user";
+import stringHelpers from "../../utils/stringHelpers";
 
 // フロント側で管理するuser側のvalidation
 const validation = {
