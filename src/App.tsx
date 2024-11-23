@@ -25,16 +25,16 @@ function App() {
     // ここで認証状態をチェックし、必要に応じてリダイレクト
     if (
       !isAuthenticated() &&
-      location.pathname != "/signup" &&
       location.pathname != "/login" &&
+      location.pathname != "/signup" &&
       location.pathname != "/editUser"
     ) {
-      navigate("/signup");
+      navigate("/login");
     }
     // ログインしている場合はsignupページに遷移できないようにする
     if (
       isAuthenticated() &&
-      (location.pathname == "/signup" || location.pathname == "/login")
+      (location.pathname == "/login" || location.pathname == "/signup")
     ) {
       navigate("/");
     }
@@ -48,12 +48,8 @@ function App() {
     <>
       {/* ヘッダー部分 */}
       <div className="App">
-        <Link to="/">Home</Link>
-        <br />
-        {!isAuthenticated() ? (
-          <Link to="/signup">Signup</Link>
-        ) : (
-          <Link to="/" onClick={handleLogout}>
+        {isAuthenticated() && (
+          <Link to="/login" onClick={handleLogout}>
             Logout
           </Link>
         )}
@@ -64,9 +60,6 @@ function App() {
           <Route path="/editUser" element={<EditUser />} />
         </Routes>
       </div>
-
-      {isAuthenticated() ? "ログインしています。" : "ログインしていません。"}
-      {/* ログイン状態を確認するためです。後に削除 */}
 
       <StoreDashboard userId={userId} />
     </>
