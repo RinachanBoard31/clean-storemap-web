@@ -4,8 +4,8 @@ import { useState } from "react";
 import { AppTitle } from "../AppTitle";
 import { EarthVideo } from "../EarthVideo"; // 動画ファイルをインポート
 import UserForm from "./UserForm";
-import { loginUser } from "../../hooks/user/uselogin";
-import userValidate from "../../hooks/user/useValidationUser";
+import { loginUser } from "../../hooks/user/useLogin";
+import { userValidate } from "../../hooks/user/useValidationUser";
 import { useSession } from "../../hooks/user/useSession";
 import { UserLoginType } from "../../types/user";
 import "../../css/user/Login.css";
@@ -14,13 +14,14 @@ export const Login = () => {
   const { triggerLogin, userId, errorLogin, resetLogin } = loginUser();
   const { createSession } = useSession();
   const [email, setEmail] = useState("");
-  const [errorMessages, setErrorMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<Record<string, string>>({}); // errorMessageはフロント、バックエンドでのエラーが共に入る
   const navigate = useNavigate();
 
   useEffect(() => {
     if (errorLogin) {
       // 本来であればsetErrorMessage(`${errorLogin}`)とするが、フロントに500番のエラーしか返ってこないので、直接エラーメッセージを入れる
-      setErrorMessage("Emailが登録されていません");
+      setErrorMessage({ email: "Emailが登録されていません" });
+      console.log(errorMessage);
     }
   }, [errorLogin]);
 
@@ -35,9 +36,9 @@ export const Login = () => {
     const user: UserLoginType = {
       email: email,
     };
-    const err = userValidate.validate(user);
+    const err = userValidate(user);
     setErrorMessage(err);
-    if (err != "") {
+    if (Object.keys(err).length != 0) {
       return;
     }
     resetLogin();
@@ -51,17 +52,21 @@ export const Login = () => {
         {EarthVideo()}
         <div className="content-area">
           <div className="login-form">
-            {UserForm.EmailFrom(errorMessages, setEmail)}
+            {UserForm.EmailFrom(errorMessage, setEmail)}
           </div>
-          {errorLogin && <span className="errorMessage">{errorMessages}</span>}
+          {/* エラーの表示 */}
+          {Object.keys(errorMessage).includes("email") && (
+            <>
+              <span className="errorMessage">{errorMessage["email"]}</span>
+              <br />
+            </>
+          )}
           <button onClick={handleLogin} className="login-btn">
             ログイン
           </button>
-          <div className="login-area-button">
-            <a href="signup" className="signup-link">
-              新規登録の方はこちら
-            </a>
-          </div>
+          <a href="signup" className="signup-link">
+            新規登録の方はこちら
+          </a>
         </div>
       </div>
     </>

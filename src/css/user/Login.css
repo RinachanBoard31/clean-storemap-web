@@ -32,6 +32,9 @@
 }
 
 .signup-link {
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
   color: rgb(6, 28, 34);
   padding: 10px 0 0 0;
 }

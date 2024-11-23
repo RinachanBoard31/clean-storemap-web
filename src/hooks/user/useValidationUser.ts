@@ -1,59 +1,41 @@
 import { User } from "../../types/user";
-import stringHelpers from "../../utils/stringHelpers";
 
-// フロント側で管理するuser側のvalidation
+// フロント側のvalidation
 const validation = {
   name: (name: string) => {
-    return name == "" ? "Name is blank\n" : "";
+    return name == "" ? "名前が空欄です。" : false;
   },
   email: (email: string) => {
     if (email == "") {
-      return "Email is blank\n";
+      return "emailが空欄です。";
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // emailが有効であるかどうか
     if (!emailRegex.test(email)) {
-      return "Email format is invalid\n";
+      return "emailの形式が正しくありません。";
     }
-    return "";
+    return false;
   },
   age: (age: number) => {
-    return age < 0 ? "Age is blank\n" : "";
+    return age < 0 ? "年齢が空欄です。" : false;
   },
 };
 
-function validate(user: Partial<User>): string {
-  let error: string = "";
-  if (user.name) {
-    error += validation.name(user.name);
+export const userValidate = (user: Partial<User>): Record<string, string> => {
+  let error: Record<string, string> = {};
+  const nameError =
+    user.name !== undefined ? validation.name(user.name) : undefined;
+  if (nameError) {
+    error["name"] = nameError;
   }
-  if (user.email) {
-    error += validation.email(user.email);
+  const emailError =
+    user.email !== undefined ? validation.email(user.email) : undefined;
+  if (emailError) {
+    error["email"] = emailError;
   }
-  if (user.age) {
-    error += validation.age(user.age);
+  const ageError =
+    user.age !== undefined ? validation.age(user.age) : undefined;
+  if (ageError) {
+    error["age"] = ageError;
   }
   return error;
-}
-
-// 表示するためにエラーを表示用に変換する
-function setErrorMessageToDisplay(errorMessages: string): Array<string> {
-  let displayedErrorMessages: Array<string> = [];
-  errorMessages.split("\n").forEach((errorMessage) => {
-    errorMessage.includes("Name")
-      ? displayedErrorMessages.push("nameが空欄です。")
-      : "";
-    errorMessage.includes("Email")
-      ? displayedErrorMessages.push("Emailに誤りがあるため確認してください。")
-      : "";
-    stringHelpers.includesAny(errorMessage, "年齢", "Age")
-      ? displayedErrorMessages.push("年齢を選択してください。")
-      : "";
-  });
-  return displayedErrorMessages.filter((value) => value != ""); // 空文字を除去する
-}
-
-export default {
-  validation,
-  validate,
-  setErrorMessageToDisplay,
 };

@@ -6,5 +6,11 @@ export const updateUser = (userId: any) => {
     `http://localhost:8080/user/${userId}`,
     api.sendPutRequest
   );
-  return { trigger, isMutating, data, error, reset };
+  return {
+    triggerUpdateUser: trigger,
+    isMutatingUpdateUser: isMutating,
+    dataUpdateUser: data,
+    errorUpdateUser: error,
+    resetUpdateUser: reset,
+  };
 };

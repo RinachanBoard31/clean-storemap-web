@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { changeVideoBoxShadowColor } from "../hooks/user/useChangeVideoBoxShadowColor";
-
 import videoSource from "../assets/earth.mp4";
 import "../css/EarthVideo.css";
 export const EarthVideo = () => {
