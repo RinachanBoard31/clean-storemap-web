@@ -54,7 +54,12 @@ export const EditUser = () => {
     }
     reset();
     try {
-      await trigger({ user: user });
+      await trigger({
+        name: user.name,
+        age: user.age,
+        sex: user.sex,
+        gender: user.gender,
+      });
       createSession(id); // idをCookieに保存する
       navigate("/"); // 画面遷移
     } catch (err) {
