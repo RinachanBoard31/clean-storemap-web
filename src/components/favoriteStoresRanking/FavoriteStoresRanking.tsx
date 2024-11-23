@@ -1,7 +1,8 @@
 import React from "react";
 import { useShowFavoriteStoresRanking } from "../../hooks/useShowFavoriteStoresRanking.tsx";
-import { FavoriteStoresTable } from "./FavoriteStoresTable.tsx";
 import { FavoriteStoresTitle } from "./FavoriteStoresTitle.tsx";
+import { FavoriteStoresTable } from "./FavoriteStoresTable.tsx";
+import { FavoriteStoresMap } from "./FavoriteStoresMap.tsx";
 import { LoadingIndicator } from "../common/LoadingIndicator.tsx";
 import { ErrorMessage } from "../common/ErrorMessage.tsx";
 
@@ -28,6 +29,7 @@ const FavoriteStoresRanking: React.FC = () => {
     <>
       <FavoriteStoresTitle />
       <FavoriteStoresTable stores={rankedFavoriteStores} />
+      <FavoriteStoresMap stores={rankedFavoriteStores} />
     </>
   );
 };
