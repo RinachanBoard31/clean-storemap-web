@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import { StoreDashboard } from "./components/StoreDashboard";
 import Signup from "./components/Signup";
+import ShowFavoriteStoresRanking from "./components/favoriteStoresRanking/FavoriteStoresRanking";
 
 function App() {
   const [cookies, , removeCookie] = useCookies(["isSession"]);
@@ -39,12 +40,15 @@ function App() {
         <br />
         <Link to="/signup">Signup</Link>
         <br />
+        <Link to="/favorite-store-ranking">Favorite Store Ranking</Link>
+        <br />
         <Link to="/" onClick={logout}>
           Logout
         </Link>
         <br />
         <Routes>
           <Route path="/signup" element={<Signup />} />
+          <Route path="/favorite-store-ranking" element={<ShowFavoriteStoresRanking />} />
         </Routes>
       </div>
 
