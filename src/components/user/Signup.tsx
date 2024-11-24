@@ -1,11 +1,11 @@
 import { AppTitle } from "../AppTitle";
 import { EarthVideo } from "../EarthVideo"; // 動画ファイルをインポート
-import { signupUser } from "../../hooks/user/useSignup";
+import { useSignupUser } from "../../hooks/user/useSignup";
 import "../../css/user/Signup.css";
 
 export const Signup = () => {
   function handleSignup() {
-    signupUser();
+    useSignupUser();
   }
 
   return (

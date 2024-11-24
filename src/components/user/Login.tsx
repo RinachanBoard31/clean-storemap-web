@@ -4,14 +4,14 @@ import { useState } from "react";
 import { AppTitle } from "../AppTitle";
 import { EarthVideo } from "../EarthVideo"; // 動画ファイルをインポート
 import UserForm from "./UserForm";
-import { loginUser } from "../../hooks/user/useLogin";
+import { useLogin } from "../../hooks/user/useLogin";
 import { userValidate } from "../../hooks/user/useValidationUser";
 import { useSession } from "../../hooks/user/useSession";
 import { UserLoginType } from "../../types/user";
 import "../../css/user/Login.css";
 
 export const Login = () => {
-  const { triggerLogin, userId, errorLogin, resetLogin } = loginUser();
+  const { triggerLogin, userId, errorLogin, resetLogin } = useLogin();
   const { createSession } = useSession();
   const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState<Record<string, string>>({}); // errorMessageはフロント、バックエンドでのエラーが共に入る

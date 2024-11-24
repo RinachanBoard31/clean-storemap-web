@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { SexGenderCanvas } from "./UserSexGenderCanvas";
 import { DisplayErrorsWithListTag } from "./DisplayErrorsWithListTag";
 import UserForm from "./UserForm";
-import { updateUser } from "../../hooks/user/useUpdateUser";
+import { useUpdateUser } from "../../hooks/user/useUpdateUser";
 import { userValidate } from "../../hooks/user/useValidationUser";
 import { useSession } from "../../hooks/user/useSession";
 import { UserUpdateType } from "../../types/user";
@@ -23,7 +23,7 @@ export const UserEdit = () => {
   const params = url.searchParams;
   const id = Number(params.get("id"));
   const { triggerUpdateUser, errorUpdateUser, resetUpdateUser } =
-    updateUser(id);
+    useUpdateUser(id);
 
   useEffect(() => {
     if (errorUpdateUser) {
