@@ -1,7 +1,6 @@
 import { StoreMap } from "../components/StoreMap";
 import { useNearStores } from "../hooks/useNearStores";
-// import { useFavoriteStores } from "../hooks/useFavoriteStores";
-import { Store } from "../types/store";
+import { useFavoriteStores } from "../hooks/useFavoriteStores";
 
 type Props = {
   userId: string;
@@ -16,20 +15,15 @@ export const StoreDashboard: React.FC<Props> = (props) => {
     resetNearStore,
   } = useNearStores();
 
-  // const { isMutatingFavoriteStore, favoriteStores, errorFavoriteStore } =
-  //   useFavoriteStores(props.userId);
-  // userIdを使ってお気に入りの店舗情報を取得するエンドポイントが完成したら切り替える
-  const favoriteStores: Store[] = [];
-
   function handleCallGetStores() {
     resetNearStore();
     triggerNearStore();
   }
 
+  const { favoriteStores } = useFavoriteStores(props.userId);
+
   return (
     <>
-      <h1>Clean Storemap Web</h1>
-
       <div className="card">
         <button onClick={handleCallGetStores}>店舗情報を取得</button>
         {isMutatingNearStore && <p>データ取得中...</p>}

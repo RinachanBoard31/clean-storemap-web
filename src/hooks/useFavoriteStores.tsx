@@ -3,7 +3,7 @@ import useSWRMutation from "swr/mutation";
 import api from "../api/api";
 
 export const useFavoriteStores = (userId: string) => {
-  const { trigger, isMutating, data, error, reset } = useSWRMutation(
+  const { trigger, data, reset } = useSWRMutation(
     `http://localhost:8080/user/${userId}/favorite-store`,
     api.sendGetRequest
   );
@@ -14,8 +14,6 @@ export const useFavoriteStores = (userId: string) => {
   }, [reset, trigger]);
 
   return {
-    isMutatingFavoriteStore: isMutating,
     favoriteStores: data?.stores,
-    errorFavoriteStore: error,
   };
 };

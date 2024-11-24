@@ -6,6 +6,7 @@ import {
   useAdvancedMarkerRef,
 } from "@vis.gl/react-google-maps";
 import styles from "./StoreMarker.module.scss";
+import { StoreFavoriteButton } from "./StoreFavoriteButton";
 import DollarIcon from "../assets/dollar.svg";
 import { Store } from "../types/store";
 import { useRegisterFavoriteStore } from "../hooks/useRegisterFavoriteStore";
@@ -117,13 +118,10 @@ export const StoreMarker: React.FC<Props> = (props) => {
                 </li>
               ))}
           </ul>
-          {props.isFavorite ? (
-            <p>お気に入り登録済</p>
-          ) : (
-            <button onClick={handleFavoriteButtonClick}>
-              お気に入りに登録
-            </button>
-          )}
+          <StoreFavoriteButton
+            isFavorite={props.isFavorite}
+            onHandleFavoriteButtonClick={handleFavoriteButtonClick}
+          />
         </InfoWindow>
       )}
     </>

@@ -4,8 +4,8 @@ import { StoreMarker } from "./StoreMarker";
 import { Store } from "../types/store";
 
 const containerStyle = {
-  width: "500px",
-  height: "500px",
+  width: "800px",
+  height: "800px",
 };
 
 type Props = {
