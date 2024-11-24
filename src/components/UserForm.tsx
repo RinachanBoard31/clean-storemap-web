@@ -1,5 +1,6 @@
 import stringHelpers from "../utils/stringHelpers";
 import { ChangeEvent } from "react";
+import "./UserForm.css";
 
 const onChangeInputValue = (e: ChangeEvent<HTMLInputElement>, setFunc: any) => {
   setFunc(e.target.value);
@@ -20,7 +21,7 @@ function NameFrom(errorMessage: string, setNameFunc: any) {
         id="name"
         name="name"
         placeholder="名前を入力してください"
-        className={errorMessage.includes("Name") ? "error" : ""}
+        className={errorMessage.includes("Name") ? "errorFrom" : ""}
         onChange={(e) => onChangeInputValue(e, setNameFunc)}
       />
       <br />
@@ -37,7 +38,7 @@ function EmailFrom(errorMessage: string, setNameFunc: any) {
         id="email"
         name="email"
         placeholder="emailを入力してください"
-        className={errorMessage.includes("Email") ? "error" : ""}
+        className={errorMessage.includes("Email") ? "errorFrom" : ""}
         onChange={(e) => onChangeInputValue(e, setNameFunc)}
       />
       <br />
@@ -57,7 +58,9 @@ function AgeFrom(
       <select
         name="selectedAge"
         className={
-          stringHelpers.includesAny(errorMessage, "年齢", "Age") ? "error" : ""
+          stringHelpers.includesAny(errorMessage, "年齢", "Age")
+            ? "errorFrom"
+            : ""
         }
         onChange={(e) => onChangeSelectValue(e, setAgeFunc)}
       >
