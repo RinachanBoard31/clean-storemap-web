@@ -15,6 +15,7 @@ type Props = {
   store: Store;
   isActive: boolean;
   isFavorite: boolean;
+  markerColor?: string;
   onMarkerClick: () => void;
 };
 
