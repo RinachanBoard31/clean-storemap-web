@@ -48,13 +48,17 @@ function App() {
       {/* ヘッダー部分 */}
       <div className="App">
         {isAuthenticated() && (
-          <Link to="/login" onClick={handleLogout}>
-            Logout
-          </Link>
+          <>
+            <Link to="/favorite-store-ranking">Favorite Store Ranking</Link>
+            <br />
+            <Link to="/home">Home</Link>
+            <br />
+            <Link to="/login" onClick={handleLogout}>
+              Logout
+            </Link>
+          </>
         )}
-        <br />
-        <Link to="/favorite-store-ranking">Favorite Store Ranking</Link>
-        <br />
+
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
