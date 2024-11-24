@@ -52,6 +52,8 @@ function App() {
           <>
             <Link to="/favorite-store-ranking">Favorite Store Ranking</Link>
             <br />
+            <Link to="/home">Home</Link>
+            <br />
             <Link to="/login" onClick={handleLogout}>
               Logout
             </Link>
