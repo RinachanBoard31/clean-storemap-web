@@ -9,6 +9,8 @@ import {
   useNavigate,
   useLocation,
 } from "react-router-dom";
+
+import ShowFavoriteStoresRanking from "./components/favoriteStoresRanking/FavoriteStoresRanking";
 import { EditUser } from "./components/EditUser";
 import { Signup } from "./components/Signup";
 import { Login } from "./components/Login";
@@ -58,10 +60,13 @@ function App() {
           </Link>
         )}
         <br />
+        <Link to="/favorite-store-ranking">Favorite Store Ranking</Link>
+        <br />
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/editUser" element={<EditUser />} />
+          <Route path="/favorite-store-ranking" element={<ShowFavoriteStoresRanking />} />
         </Routes>
       </div>
 
