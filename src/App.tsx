@@ -10,10 +10,10 @@ import {
 } from "react-router-dom";
 import ShowFavoriteStoresRanking from "./components/favoriteStoresRanking/FavoriteStoresRanking";
 import { UserEdit } from "./components/user/UserEdit";
-import { Signup } from "./components/user/Signup";
-import { Login } from "./components/user/Login";
+import { Signup } from "./components/auth/Signup";
+import { Login } from "./components/auth/Login";
 import { Home } from "./components/Home";
-import { useSession } from "./hooks/user/useSession";
+import { useSession } from "./hooks/auth/useSession";
 
 function App() {
   const { deleteSession, isAuthenticated, getSessionId } = useSession();

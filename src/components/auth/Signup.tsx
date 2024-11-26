@@ -1,7 +1,7 @@
 import { AppTitle } from "../AppTitle";
 import { EarthVideo } from "../EarthVideo"; // 動画ファイルをインポート
-import { useSignupUser } from "../../hooks/user/useSignup";
-import "../../css/user/Signup.css";
+import { useSignupUser } from "../../hooks/auth/useSignup";
+import "../../css/auth/Signup.css";
 
 export const Signup = () => {
   function handleSignup() {

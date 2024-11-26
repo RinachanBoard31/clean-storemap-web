@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { AppTitle } from "../AppTitle";
 import { EarthVideo } from "../EarthVideo"; // 動画ファイルをインポート
-import UserForm from "./UserForm";
-import { useLogin } from "../../hooks/user/useLogin";
+import UserForm from "../user/UserForm";
+import { useLogin } from "../../hooks/auth/useLogin";
 import { userValidate } from "../../hooks/user/useValidationUser";
-import { useSession } from "../../hooks/user/useSession";
+import { useSession } from "../../hooks/auth/useSession";
 import { UserLoginType } from "../../types/user";
-import "../../css/user/Login.css";
+import "../../css/auth/Login.css";
 
 export const Login = () => {
   const { triggerLogin, userId, errorLogin, resetLogin } = useLogin();

@@ -5,7 +5,7 @@ import { DisplayErrorsWithListTag } from "./DisplayErrorsWithListTag";
 import UserForm from "./UserForm";
 import { useUpdateUser } from "../../hooks/user/useUpdateUser";
 import { userValidate } from "../../hooks/user/useValidationUser";
-import { useSession } from "../../hooks/user/useSession";
+import { useSession } from "../../hooks/auth/useSession";
 import { UserUpdateType } from "../../types/user";
 import "../../css/user/UserEdit.css";
 
