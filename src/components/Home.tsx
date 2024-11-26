@@ -1,5 +1,5 @@
 import { StoreDashboard } from "./StoreDashboard";
-import { useSession } from "../hooks/sessionUser";
+import { useSession } from "../hooks/auth/useSession";
 
 export const Home = () => {
   const { getSessionId } = useSession();

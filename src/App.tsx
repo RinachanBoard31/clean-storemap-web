@@ -8,13 +8,12 @@ import {
   useNavigate,
   useLocation,
 } from "react-router-dom";
-
 import ShowFavoriteStoresRanking from "./components/favoriteStoresRanking/FavoriteStoresRanking";
-import { EditUser } from "./components/EditUser";
-import { Signup } from "./components/Signup";
-import { Login } from "./components/Login";
+import { UserEdit } from "./components/user/UserEdit";
+import { Signup } from "./components/auth/Signup";
+import { Login } from "./components/auth/Login";
 import { Home } from "./components/Home";
-import { useSession } from "./hooks/sessionUser";
+import { useSession } from "./hooks/auth/useSession";
 
 function App() {
   const { deleteSession, isAuthenticated, getSessionId } = useSession();
@@ -63,7 +62,7 @@ function App() {
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/editUser" element={<EditUser />} />
+          <Route path="/editUser" element={<UserEdit />} />
           <Route path="/home" element={<Home />} />
           <Route
             path="/favorite-store-ranking"
