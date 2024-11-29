@@ -21,7 +21,7 @@ export const UserEdit = () => {
   // idの取得
   const url = new URL(window.location.href);
   const params = url.searchParams;
-  const id = Number(params.get("id"));
+  const id = params.get("id");
   const { triggerUpdateUser, errorUpdateUser, resetUpdateUser } =
     useUpdateUser(id);
 
