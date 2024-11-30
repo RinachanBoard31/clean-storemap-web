@@ -28,6 +28,7 @@ export const StoreMarker: React.FC<Props> = (props) => {
   const map = useMap();
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [infoWindowShown, setInfoWindowShown] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(props.isFavorite);
   const handleMarkerClick = useCallback(
     (ev: google.maps.MapMouseEvent) => {
       if (!map) return;
@@ -35,10 +36,13 @@ export const StoreMarker: React.FC<Props> = (props) => {
       console.log("marker clicked:", ev.latLng.toString());
       map.panTo(ev.latLng);
       props.onMarkerClick();
+      setInfoWindowShown(true);
     },
     [map, props.onMarkerClick]
   );
-  const handleClose = useCallback(() => setInfoWindowShown(false), []);
+  function handleClose() {
+    setInfoWindowShown(false);
+  }
   const { trigger } = useRegisterFavoriteStore(props.userId);
   function handleFavoriteButtonClick() {
     trigger({
@@ -49,6 +53,7 @@ export const StoreMarker: React.FC<Props> = (props) => {
       latitude: props.store.location.latitude,
       longitude: props.store.location.longitude,
     });
+    setIsFavorite(true);
   }
   const dollarIcon = <img src={DollarIcon} alt="DollarIcon" />;
 
@@ -119,7 +124,7 @@ export const StoreMarker: React.FC<Props> = (props) => {
               ))}
           </ul>
           <StoreFavoriteButton
-            isFavorite={props.isFavorite}
+            isFavorite={isFavorite}
             onHandleFavoriteButtonClick={handleFavoriteButtonClick}
           />
         </InfoWindow>
