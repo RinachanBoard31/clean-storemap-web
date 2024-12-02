@@ -1,24 +1,20 @@
 import { useCookies } from "react-cookie";
 
 export const useSession = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(["id"]);
-  const createSession = (value: any) => {
-    setCookie("id", value);
-  };
+  const [cookies, , removeCookie] = useCookies(["auth_token"]);
 
   const deleteSession = () => {
-    removeCookie("id");
+    removeCookie("auth_token");
   };
 
   const isAuthenticated = () => {
-    return !!cookies.id;
+    return !!cookies.auth_token;
   };
 
   const getSessionId = () => {
-    return cookies.id;
+    return cookies.auth_token;
   };
   return {
-    createSession,
     deleteSession,
     isAuthenticated,
     getSessionId,
