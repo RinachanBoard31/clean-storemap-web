@@ -6,6 +6,7 @@ import {
   useAdvancedMarkerRef,
 } from "@vis.gl/react-google-maps";
 import styles from "./StoreMarker.module.scss";
+import { StoreFavoriteButton } from "./StoreFavoriteButton";
 import DollarIcon from "../assets/dollar.svg";
 import { Store } from "../types/store";
 import { useRegisterFavoriteStore } from "../hooks/useRegisterFavoriteStore";
@@ -27,6 +28,7 @@ export const StoreMarker: React.FC<Props> = (props) => {
   const map = useMap();
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [infoWindowShown, setInfoWindowShown] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(props.isFavorite);
   const handleMarkerClick = useCallback(
     (ev: google.maps.MapMouseEvent) => {
       if (!map) return;
@@ -34,10 +36,13 @@ export const StoreMarker: React.FC<Props> = (props) => {
       console.log("marker clicked:", ev.latLng.toString());
       map.panTo(ev.latLng);
       props.onMarkerClick();
+      setInfoWindowShown(true);
     },
     [map, props.onMarkerClick]
   );
-  const handleClose = useCallback(() => setInfoWindowShown(false), []);
+  function handleClose() {
+    setInfoWindowShown(false);
+  }
   const { trigger } = useRegisterFavoriteStore(props.userId);
   function handleFavoriteButtonClick() {
     trigger({
@@ -48,6 +53,7 @@ export const StoreMarker: React.FC<Props> = (props) => {
       latitude: props.store.location.latitude,
       longitude: props.store.location.longitude,
     });
+    setIsFavorite(true);
   }
   const dollarIcon = <img src={DollarIcon} alt="DollarIcon" />;
 
@@ -117,13 +123,10 @@ export const StoreMarker: React.FC<Props> = (props) => {
                 </li>
               ))}
           </ul>
-          {props.isFavorite ? (
-            <p>お気に入り登録済</p>
-          ) : (
-            <button onClick={handleFavoriteButtonClick}>
-              お気に入りに登録
-            </button>
-          )}
+          <StoreFavoriteButton
+            isFavorite={isFavorite}
+            onHandleFavoriteButtonClick={handleFavoriteButtonClick}
+          />
         </InfoWindow>
       )}
     </>
