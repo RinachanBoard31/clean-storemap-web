@@ -2,10 +2,7 @@ import { useCookies } from "react-cookie";
 
 export const useSession = () => {
   const cookieName = import.meta.env.VITE_AUTH_COOKIE_NAME;
-  const [cookies, , removeCookie] = useCookies(
-    // import.meta.env.VITE_AUTH_COOKIE_NAME
-    [cookieName]
-  );
+  const [cookies, _, removeCookie] = useCookies([cookieName]);
 
   const deleteSession = () => {
     removeCookie(cookieName);
