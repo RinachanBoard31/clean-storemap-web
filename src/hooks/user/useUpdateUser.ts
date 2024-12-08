@@ -1,9 +1,9 @@
 import useSWRMutation from "swr/mutation";
 import api from "../../api/api";
 
-export const useUpdateUser = (userId: any) => {
+export const useUpdateUser = () => {
   const { trigger, isMutating, data, error, reset } = useSWRMutation(
-    `http://localhost:8080/user/${userId}`,
+    `http://localhost:8080/user`,
     api.sendPutRequest
   );
   return {

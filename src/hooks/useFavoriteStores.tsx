@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import useSWRMutation from "swr/mutation";
 import api from "../api/api";
 
-export const useFavoriteStores = (userId: string) => {
+export const useFavoriteStores = () => {
   const { trigger, data, reset } = useSWRMutation(
-    `http://localhost:8080/user/${userId}/favorite-store`,
+    `http://localhost:8080/user/favorite-store`,
     api.sendGetRequest
   );
 
