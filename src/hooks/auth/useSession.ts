@@ -1,7 +1,7 @@
 import { useCookies } from "react-cookie";
 
 export const useSession = () => {
-  const cookieName = import.meta.env.VITE_AUTH_COOKIE_NAME;
+  const cookieName = import.meta.env.VITE_JWT_TOKEN_NAME;
   const [cookies, _, removeCookie] = useCookies([cookieName]);
 
   const deleteSession = () => {
