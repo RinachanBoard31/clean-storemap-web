@@ -12,6 +12,7 @@ import { Store } from "../types/store";
 import { useRegisterFavoriteStore } from "../hooks/useRegisterFavoriteStore";
 
 type Props = {
+  userId: string;
   store: Store;
   isActive: boolean;
   isFavorite: boolean;
@@ -42,7 +43,7 @@ export const StoreMarker: React.FC<Props> = (props) => {
   function handleClose() {
     setInfoWindowShown(false);
   }
-  const { trigger } = useRegisterFavoriteStore();
+  const { trigger } = useRegisterFavoriteStore(props.userId);
   function handleFavoriteButtonClick() {
     trigger({
       storeId: props.store.id,

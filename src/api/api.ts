@@ -5,7 +5,6 @@ async function sendPutRequest<T extends { [key: string]: unknown }>(
   const response = await fetch(url, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    credentials: "include",
     body: JSON.stringify(arg),
   });
   if (!response.ok) {
@@ -16,7 +15,6 @@ async function sendPutRequest<T extends { [key: string]: unknown }>(
 async function sendGetRequest(url: string) {
   const response = await fetch(url, {
     headers: { "Content-Type": "application/json" },
-    credentials: "include",
   });
   if (!response.ok) {
     throw new Error(`RequestFailed: url:${url} status:${response.status}`);
@@ -40,7 +38,6 @@ async function sendPostRequest<
     method: "POST",
     body: JSON.stringify(arg),
     headers: { "Content-Type": "application/json" },
-    credentials: "include",
   });
   if (!response.ok) {
     throw new Error(`RequestFailed: url:${url} status:${response.status}`);

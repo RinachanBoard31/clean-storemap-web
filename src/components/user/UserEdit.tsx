@@ -5,10 +5,12 @@ import { DisplayErrorsWithListTag } from "./DisplayErrorsWithListTag";
 import UserForm from "./UserForm";
 import { useUpdateUser } from "../../hooks/user/useUpdateUser";
 import { userValidate } from "../../hooks/user/useValidationUser";
+import { useSession } from "../../hooks/auth/useSession";
 import { UserUpdateType } from "../../types/user";
 import "../../css/user/UserEdit.css";
 
 export const UserEdit = () => {
+  const { createSession } = useSession();
   // sexとgenderは子コンポーネントとして別関数にしているため親コンポーネントであるここで定義をする。
   const [sex, setSex] = useState<number>(0); // グラフのX座標
   const [gender, setGender] = useState<number>(0); // グラフのY座標
@@ -16,8 +18,12 @@ export const UserEdit = () => {
   const [age, setAge] = useState<number>(-1); // グラフのY座標
   const [errorMessage, setErrorMessage] = useState<Record<string, string>>({});
   const navigate = useNavigate();
+  // idの取得
+  const url = new URL(window.location.href);
+  const params = url.searchParams;
+  const id = Number(params.get("id"));
   const { triggerUpdateUser, errorUpdateUser, resetUpdateUser } =
-    useUpdateUser();
+    useUpdateUser(id);
 
   useEffect(() => {
     if (errorUpdateUser) {
@@ -45,6 +51,7 @@ export const UserEdit = () => {
       sex: user.sex,
       gender: user.gender,
     });
+    createSession(id);
     navigate("/home");
   }
 

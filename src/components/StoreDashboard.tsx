@@ -2,7 +2,11 @@ import { StoreMap } from "../components/StoreMap";
 import { useNearStores } from "../hooks/useNearStores";
 import { useFavoriteStores } from "../hooks/useFavoriteStores";
 
-export const StoreDashboard: React.FC = () => {
+type Props = {
+  userId: string;
+};
+
+export const StoreDashboard: React.FC<Props> = (props) => {
   const {
     triggerNearStore,
     isMutatingNearStore,
@@ -16,7 +20,7 @@ export const StoreDashboard: React.FC = () => {
     triggerNearStore();
   }
 
-  const { favoriteStores } = useFavoriteStores();
+  const { favoriteStores } = useFavoriteStores(props.userId);
 
   return (
     <>
@@ -27,7 +31,11 @@ export const StoreDashboard: React.FC = () => {
       </div>
 
       {nearStores && favoriteStores && (
-        <StoreMap nearStores={nearStores} favoriteStores={favoriteStores} />
+        <StoreMap
+          userId={props.userId}
+          nearStores={nearStores}
+          favoriteStores={favoriteStores}
+        />
       )}
     </>
   );
