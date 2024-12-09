@@ -23,3 +23,9 @@
 .action-contents a {
   color: rgb(88, 192, 221);
 }
+
+.error {
+  color: red;
+  font-size: 1.2em;
+  margin: -20px 0 -40px 0;
+}
