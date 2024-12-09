@@ -1,4 +1,4 @@
-export const useSignupUser = async () => {
+export const useSignup = async () => {
   // アクセス後にリダイレクトするのでfetchではなくてwindow.location.hrefを使用する
-  window.location.href = "http://localhost:8080/auth";
+  window.location.href = "http://localhost:8080/auth?accessedType=signup";
 };

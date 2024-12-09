@@ -1,26 +1,22 @@
 import { AppTitle } from "../AppTitle";
 import { EarthVideo } from "../EarthVideo"; // 動画ファイルをインポート
-import { useSignupUser } from "../../hooks/auth/useSignup";
-import "../../css/auth/Signup.css";
+import { useSignup } from "../../hooks/auth/useSignup";
+import "../../css/auth/auth.css";
 
 export const Signup = () => {
   function handleSignup() {
-    useSignupUser();
+    useSignup();
   }
 
   return (
     <>
       {AppTitle()}
-      <div className="signup-area">
+      <div className="contents-area">
         {EarthVideo()}
-        <div className="signup-area-button">
-          <button onClick={handleSignup} className="signup-btn">
-            Googleでサインアップする
-          </button>
+        <div className="action-contents">
+          <button onClick={handleSignup}>Googleでサインアップする</button>
           <br />
-          <a href="login" className="login-link">
-            ログインの方はこちら
-          </a>
+          <a href="login">ログインの方はこちら</a>
         </div>
       </div>
     </>
