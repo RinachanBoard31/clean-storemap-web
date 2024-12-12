@@ -1,7 +1,7 @@
 import React from "react";
-import "../../css/FavoriteStoresRanking.css";
+import "../../css/favoriteStoresRanking/favoriteStoresRanking.css";
 import { Store } from "../../types/store";
-import { PriceLevelIcons } from "./PriceLevelIcons";
+import { PriceLevelIcons } from "../icons/PriceLevelIcons";
 import { AiOutlineCrown } from "react-icons/ai";
 
 type Props = {
@@ -16,7 +16,7 @@ export const FavoriteStoresTable: React.FC<Props> = ({ stores }) => (
           <th>Rank</th>
           <th>Store Name</th>
           <th>Regular Hours</th>
-          <th>Price Level</th>
+          <th className="price-level-header">Price Level</th>
         </tr>
       </thead>
       <tbody>
@@ -42,7 +42,7 @@ export const FavoriteStoresTable: React.FC<Props> = ({ stores }) => (
             </td>
             <td className={`store-name rank-${index}`}>{store.name}</td>
             <td>{store.regularOpeningHours}</td>
-            <td>
+            <td className="price-level-cell">
               <PriceLevelIcons priceLevel={store.priceLevel} />
             </td>
           </tr>

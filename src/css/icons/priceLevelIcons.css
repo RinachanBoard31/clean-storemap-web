@@ -1,0 +1,17 @@
+.price-level-icon {
+  margin-right: 2px;
+  font-size: 16px;
+}
+
+.price-level-icon-filled {
+  color: #ffd700; /* 黄色 */
+}
+
+.price-level-icon-empty {
+  color: #a0a0a0; /* 灰色 */
+}
+
+.price-level-text {
+  font-size: 14px;
+  font-weight: bold;
+}

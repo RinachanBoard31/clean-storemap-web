@@ -133,3 +133,14 @@
 .favorite-stores-row:not(.rank-0):not(.rank-1):not(.rank-2) .store-name {
   --rank-color: #8c8cff;
 }
+
+/* Price Level 列を広くする */
+.price-level-header {
+  width: 20%;
+  text-align: center;
+}
+
+.price-level-cell {
+  text-align: center;
+  white-space: nowrap; /* 改行を防止 */
+}

@@ -7,7 +7,7 @@ import {
 } from "@vis.gl/react-google-maps";
 import styles from "./StoreMarker.module.scss";
 import { StoreFavoriteButton } from "./StoreFavoriteButton";
-import DollarIcon from "../assets/dollar.svg";
+import { PriceLevelIcons } from "./icons/PriceLevelIcons";
 import { Store } from "../types/store";
 import { useRegisterFavoriteStore } from "../hooks/useRegisterFavoriteStore";
 
@@ -54,44 +54,6 @@ export const StoreMarker: React.FC<Props> = (props) => {
     });
     setIsFavorite(true);
   }
-  const dollarIcon = <img src={DollarIcon} alt="DollarIcon" />;
-
-  function priceLevelToText(priceLevel: string) {
-    switch (priceLevel) {
-      case "PRICE_LEVEL_UNSPECIFIED":
-        return <p>価格指定なし</p>;
-      case "PRICE_LEVEL_FREE":
-        return <p>無料</p>;
-      case "PRICE_LEVEL_INEXPENSIVE":
-        return dollarIcon;
-      case "PRICE_LEVEL_MODERATE":
-        return (
-          <>
-            {dollarIcon}
-            {dollarIcon}
-          </>
-        );
-      case "PRICE_LEVEL_EXPENSIVE":
-        return (
-          <>
-            {dollarIcon}
-            {dollarIcon}
-            {dollarIcon}
-          </>
-        );
-      case "PRICE_LEVEL_VERY_EXPENSIVE":
-        return (
-          <>
-            {dollarIcon}
-            {dollarIcon}
-            {dollarIcon}
-            {dollarIcon}
-          </>
-        );
-      default:
-        return <p>価格指定なし</p>;
-    }
-  }
 
   useEffect(() => {
     setInfoWindowShown(props.isActive);
@@ -112,7 +74,7 @@ export const StoreMarker: React.FC<Props> = (props) => {
           onClose={handleClose}
         >
           <h2>{props.store.name}</h2>
-          {priceLevelToText(props.store.priceLevel)}
+          {PriceLevelIcons({ priceLevel: props.store.priceLevel })}
           <ul className={styles.list}>
             {props.store.regularOpeningHours
               .split(", ")
