@@ -1,6 +1,6 @@
 import React from "react";
 import { FaDollarSign } from "react-icons/fa";
-import "../../css/priceLevelIcons.css";
+import "../../css/icons/priceLevelIcons.css";
 
 type Props = {
   priceLevel: string;
