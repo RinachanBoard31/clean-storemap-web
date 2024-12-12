@@ -1,7 +1,7 @@
 import React from "react";
 import "../../css/FavoriteStoresRanking.css";
 import { Store } from "../../types/store";
-import { PriceLevelIcons } from "./PriceLevelIcons";
+import { PriceLevelIcons } from "../icons/PriceLevelIcons";
 import { AiOutlineCrown } from "react-icons/ai";
 
 type Props = {
