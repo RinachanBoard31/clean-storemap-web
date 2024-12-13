@@ -6,7 +6,11 @@ import { ErrorMessage } from "../common/ErrorMessage.tsx";
 
 export const Login = () => {
   const query = new URLSearchParams(window.location.search);
-  const error = query.get("error") ? "登録してください。" : "";
+  const error = query.get("error");
+  let errorMsg = "";
+  if (error && error === "not_registered") {
+    errorMsg = "登録してください。";
+  }
   function handleLogin() {
     useLogin();
   }
@@ -18,7 +22,7 @@ export const Login = () => {
         <div className="action-contents">
           {error && (
             <div className="error">
-              <ErrorMessage message={error} />
+              <ErrorMessage message={errorMsg} />
             </div>
           )}
           <button onClick={handleLogin}>ログイン</button>
