@@ -40,7 +40,7 @@ export const Login = () => {
     authUrl,
     errorCertification,
     resetCertification,
-  } = useCertification();
+  } = useCertification("login");
 
   useEffect(() => {
     if (errorCertification) {
