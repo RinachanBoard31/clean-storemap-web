@@ -19,7 +19,9 @@ async function sendGetRequest(url: string) {
     credentials: "include",
   });
   if (!response.ok) {
-    throw new Error(`RequestFailed: url:${url} status:${response.status}`);
+    console.error(`RequestFailed: url:${url} status:${response.status}`);
+    const errorMessage = await response.json();
+    throw new Error(errorMessage.message);
   }
   return await response.json();
 }

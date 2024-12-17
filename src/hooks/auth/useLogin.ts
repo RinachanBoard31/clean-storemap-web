@@ -1,4 +1,16 @@
-export const useLogin = async () => {
-  // アクセス後にリダイレクトするのでfetchではなくてwindow.location.hrefを使用する
-  window.location.href = "http://localhost:8080/auth?accessedType=login";
+import useSWRMutation from "swr/mutation";
+import api from "../../api/api";
+
+export const useLogin = (query: string) => {
+  const { trigger, isMutating, data, error, reset } = useSWRMutation(
+    "http://localhost:8080/auth/login?" + query,
+    api.sendGetRequest
+  );
+  return {
+    triggerLogin: trigger,
+    isMutatingLogin: isMutating,
+    dataLogin: data,
+    errorLogin: error,
+    resetLogin: reset,
+  };
 };
